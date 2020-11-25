@@ -1,3 +1,7 @@
+/*Realiza autentificacion y autorizacion
+-Comprueba si el token entregado el valido o no.
+-Realiza la comprobacion de roles de usuario y accesso TODO
+*/
 const jwt = require("jsonwebtoken");
 
 function verifySign(req, res, nxt) {
