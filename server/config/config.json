@@ -1,11 +1,11 @@
 {
   "development": {
     "username": "postgres",
-    "password": "postgres",
-    "database": "pagina_dev",
+    "password": "DAna3828291",
+    "database": "proyecto",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "port":"5433"
+    "port":"3002"
   },
   "test": {
     "username": "root",
