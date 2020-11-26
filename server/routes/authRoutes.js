@@ -1,6 +1,6 @@
   
 const router = require("express").Router();
-const { Users } = require("../models");
+const { Users,rols,users_rols } = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -18,9 +18,22 @@ router.post("/register", async (req, res) => {
     const hashPass = await bcrypt.hash(req.body.pass, salt);
     //se crea el usuario
     const user = await Users.create({
+      nombre:req.body.name,
+      apellido:req.body.surname,
       email: req.body.email,
+      telefono:req.body.contact,
       password: hashPass,
-    })
+    });
+    const af = await rols.findOne({
+      where: {
+        rolsName: req.body.rol,
+      },
+    });
+    await users_rols.create({
+      rolsId: af.id,
+      userId:user.id,
+    }).then(()=>{console.log("ok");
+    }).catch((err)=>console.log(err));
     return res.send(user);
   } catch (error) {
     return res.status(400).send(error);
