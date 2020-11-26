@@ -6,6 +6,7 @@ import axios from "axios";
 import Login from "./components/login.js";
 import Perfil from "./components/perfil.js";
 import Navb from "./components/nav.js"
+import Index from "./components/index.js"
 import{BrowserRouter as Router, Switch,Route,Link}from 'react-router-dom';
 function App() {
   return(
@@ -15,8 +16,11 @@ function App() {
         <Login/>
       </Route>
       <Route path="/perfil">
-        <Navb />
+        <Navb/>
         <Perfil/>
+      </Route>
+      <Route path="/">
+        <Index/>
       </Route>
     </Switch>
   </Router>
