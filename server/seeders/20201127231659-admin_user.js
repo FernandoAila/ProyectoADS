@@ -11,18 +11,12 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    const all_rols = ['admin', 'jefe de proyecto', 'desarrollador', 'freelance', 'cliente'];
-    const newData = [];
-
-    for (const rol in all_rols) {
-      const seedData = {
-        rolsName: all_rols[rol],
-        createdAt: new Date(),
-        updatedAt: new Date()
-      };
-      newData.push(seedData);
-    }
-    return queryInterface.bulkInsert('rols',newData);
+    return queryInterface.bulkInsert('users_rols', [{
+      rolsId: 1,
+      userId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }]);
   },
 
   down: async (queryInterface, Sequelize) => {
