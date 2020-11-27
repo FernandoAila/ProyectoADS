@@ -7,7 +7,9 @@ import Login from "./components/login.js";
 import Perfil from "./components/perfil.js";
 import Navb from "./components/nav.js"
 import Index from "./components/index.js"
+import Register from "./components/register.js"
 import{BrowserRouter as Router, Switch,Route,Link}from 'react-router-dom';
+
 function App() {
   return(
   <Router>
@@ -18,6 +20,10 @@ function App() {
       <Route path="/perfil">
         <Navb/>
         <Perfil/>
+      </Route>
+      <Route path="/register">
+        <Navb/>
+        <Register/>
       </Route>
       <Route path="/">
         <Index/>
