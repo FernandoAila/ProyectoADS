@@ -10,22 +10,24 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Users.associate = (models) => {
+        Users.belongsToMany(models.rols, {
+          foreignKey: 'userId', 
+          through: 'users_groups',
+          as: 'rols' 
+        });
+      };
     }
   };
   Users.init({
     email: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    nombre:DataTypes.STRING,
+    apellido:DataTypes.STRING,
+    telefono:DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Users',
   });
   return Users;
-  users.associate = (models) => {
-    users.belongsToMany(models.rols, {
-      foreignKey: 'userId',
-      through: 'users_groups',
-      as: 'rols'
-    });
-  };
 };

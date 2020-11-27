@@ -15,7 +15,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/auth", require("./routes/authRoutes"));
-app.use("/test",require("./routes/test"))
+app.use("/test",require("./routes/test"));
+app.use("/users",require("./routes/users"));
+app.use("/modules",require("./routes/modules"));
+app.use("/projects",require("./routes/projectsRoutes"));
 const PUERTO= process.env.PORT||8080;
 app.listen(
   PUERTO,()=>
