@@ -1,6 +1,8 @@
 import React, { useState, useRef} from "react";
 import axios from "axios";
 import {Alert, Button, Card, Col, Form, Image, Spinner} from "react-bootstrap";
+import {Redirect} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const Register=(props)=>{
     const form = useRef();
@@ -13,6 +15,14 @@ const Register=(props)=>{
 
     const [loading, setLoading] = useState(false);
     const [estado, setEstado] = useState('');
+
+    const isLogged = useSelector((store) => store.authReducer.isLogged);
+
+    if(!isLogged){
+        return(
+            <Redirect to="/login"  />
+        );
+    }
 
     const onChangeEmail = (e) => {
         const email = e.target.value;
@@ -73,7 +83,7 @@ const Register=(props)=>{
         <Col md="13">
             <Card className="card card-container">
                 {estado ? <b> color={"green"}> Registro Exitoso </b>
-                    :<b> Ingrese los datos de nuevo usuario </b>}
+                    :<b> Ingrese los datos de nuevo usuario </b> }
                 <Form  ref={form}>
                     <Form.Group controlId="formBasicEmail">
                         <label htmlFor="email">Email</label>
@@ -109,10 +119,10 @@ const Register=(props)=>{
                         <label htmlFor="rol">Rol</label>
                         <Form.Control as="select" type="rol"
                                       value={rol} onChange={onChangeRol}>
-                            <option value={2}>Jefe de Proyecto</option>
-                            <option value={3}>Desarrollador</option>
-                            <option value={4}>Freelance</option>
-                            <option value={5}>Cliente</option>
+                            <option value={'jefe de proyecto'}>Jefe de Proyecto</option>
+                            <option value={'desarrollador'}>Desarrollador</option>
+                            <option value={'freelance'}>Freelance</option>
+                            <option value={'cliente'}>Cliente</option>
                             </Form.Control>
                     </Form.Group>
 
@@ -125,7 +135,7 @@ const Register=(props)=>{
                         </Button>
                     </Form.Group>
                     {estado &&  <Alert variant="danger">Datos incorrectos.
-                    </Alert>}
+                    </Alert> }
                 </Form>
             </Card>
         </Col>
