@@ -2,3 +2,5 @@
 .idea/misc.xml
 .idea/workspace.xml
 server/config/config.json
+.idea
+.idea/workspace.xml
