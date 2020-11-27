@@ -15,7 +15,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       projectId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        foreignKey: true
       },
       createdAt: {
         allowNull: false,

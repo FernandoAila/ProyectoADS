@@ -10,13 +10,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Requirements.belongsTo(models.Modules);
+      Requirements.belongsTo(models.Projects, {
+        foreignKey: 'projectId'
+      });
     }
   };
   Requirements.init({
     nameRequirement: DataTypes.STRING,
     descriptionRequirement: DataTypes.STRING,
-    moduleId: DataTypes.INTEGER
+    projectId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Requirements',

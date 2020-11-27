@@ -14,11 +14,9 @@ module.exports = {
       descriptionRequirement: {
         type: Sequelize.STRING
       },
-      moduleId: {
+      projectId: {
         type: Sequelize.INTEGER,
-        references: { model: 'Modules', key: 'id' },
-        foreignKey: true,
-        onDelete: 'CASCADE',
+        foreignKey: true
       },
       createdAt: {
         allowNull: false,
