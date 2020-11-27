@@ -7,7 +7,7 @@ const authFunc = require("../helper/verifyToken");
 const verify = require("jsonwebtoken/verify");
 const { verifySign, isJefep } = require("../helper/verifyToken");
 //Maneja el registro de usuarios
-router.post("/register",[verifySign,isJefep] ,async (req, res) => {
+router.post("/register",async (req, res) => {
   try {
     const emailValid = await Users.findOne({
       where: {
@@ -17,18 +17,20 @@ router.post("/register",[verifySign,isJefep] ,async (req, res) => {
     if (emailValid) return res.status(400).send("este usuario ya existe");
     //se encripta la constrasena
     const salt = await bcrypt.genSalt(10);
-    const hashPass = await bcrypt.hash(req.body.pass, salt);
+    const hashPass = await bcrypt.hash(req.body.password, salt);
     //se crea el usuario
     const user = await Users.create({
-      nombre:req.body.name,
-      apellido:req.body.surname,
+      nombre:req.body.nombre,
+      apellido:req.body.apellido,
       email: req.body.email,
-      telefono:req.body.contact,
+      telefono:req.body.telefono,
+      createdAt: new Date(),
+      updatedAt: new Date(),
       password: hashPass,
     });
     const af = await rols.findOne({
       where: {
-        rolsName: req.body.rol,
+        id: req.body.rol,
       },
     });
     //Añadimos el id del usuario y el rol a la BD

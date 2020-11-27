@@ -19,7 +19,7 @@ const Navb=()=>{
                   <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
                   <a class="nav-item nav-link" href="/perfil">Perfil</a>
                   <a class="nav-item nav-link" href="/register">Registro</a>
-                  <a className="nav-item nav-link" href="/create_modules">Crear Modulo</a>
+                  <a className="nav-item nav-link" href="/new_project">Nuevo Proyecto</a>
                   <a className="nav-item nav-link" href="/my_modules">Mis Modulos</a>
                   <a class="nav-item nav-link disabled" href="#">Disabled</a>
               </div>
