@@ -9,6 +9,7 @@ const Register=(props)=>{
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [telefono, setTelefono] = useState("");
+    const [rol, setRol] = useState("");
 
     const [loading, setLoading] = useState(false);
     const [estado, setEstado] = useState('');
@@ -38,6 +39,11 @@ const Register=(props)=>{
         setTelefono(telefono);
     };
 
+    const onChangeRol = (e) => {
+        const rol = e.target.value;
+        setRol(rol);
+    };
+
     const validateForm = (e) => {
         return email.length > 0 && password.length > 0 && nombre.length > 0 && apellido.length > 0 && telefono.length > 0;
     }
@@ -52,6 +58,7 @@ const Register=(props)=>{
             nombre: nombre,
             apellido: apellido,
             telefono: telefono,
+            rol: rol,
         }).then((data) => {
             console.log(data);
             setEstado(true);
@@ -65,6 +72,8 @@ const Register=(props)=>{
     return (
         <Col md="13">
             <Card className="card card-container">
+                {estado ? <b> color={"green"}> Registro Exitoso </b>
+                    :<b> Ingrese los datos de nuevo usuario </b>}
                 <Form  ref={form}>
                     <Form.Group controlId="formBasicEmail">
                         <label htmlFor="email">Email</label>
@@ -98,12 +107,12 @@ const Register=(props)=>{
 
                     <Form.Group controlId="formBasicRol">
                         <label htmlFor="rol">Rol</label>
-                        <Form.Control as="select" type="phone" placeholder="Ingresar telefono"
-                                      value={telefono} onChange={onChangeTelefono}>
-                            <option>Jefe de Proyecto</option>
-                            <option>Desarrollador</option>
-                            <option>Freelance</option>
-                            <option>Cliente</option>
+                        <Form.Control as="select" type="rol"
+                                      value={rol} onChange={onChangeRol}>
+                            <option value={2}>Jefe de Proyecto</option>
+                            <option value={3}>Desarrollador</option>
+                            <option value={4}>Freelance</option>
+                            <option value={5}>Cliente</option>
                             </Form.Control>
                     </Form.Group>
 
