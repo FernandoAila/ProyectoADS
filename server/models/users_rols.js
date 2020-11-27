@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class users_rols extends Model {
     /**
@@ -23,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   users_rols.init({
-    userId: DataTypes.INTEGER,
-    rolsId: DataTypes.INTEGER
+    userId: {type:DataTypes.INTEGER,primaryKey: true},
+    rolsId: {type:DataTypes.INTEGER,primaryKey: true},
   }, {
     sequelize,
     modelName: 'users_rols',

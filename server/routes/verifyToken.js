@@ -3,7 +3,7 @@
 -Realiza la comprobacion de roles de usuario y accesso TODO
 */
 const jwt = require("jsonwebtoken");
-
+const {users_rols } = require("../models");
 function verifySign(req, res, nxt) {
   const token = req.header("auth-token");
   if (!token) return res.status(401).send("no tienes autorizado entrar");
@@ -16,4 +16,13 @@ function verifySign(req, res, nxt) {
   }
 }
 
+function verRol(req){
+ const data= users_rols.findOne({
+    where: {
+      userId: req.header("userId") 
+    },
+  })
+  return data.rolsId;
+} 
+//function verRoles
 module.exports = verifySign;
