@@ -14,7 +14,17 @@ const Navb=()=>{
       <Navbar bg="dark" variant="dark">
       <Navbar.Brand href="#home">Navbar</Navbar.Brand>
       <Nav className="mr-auto">
-      </Nav> 
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav">
+                  <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-item nav-link" href="/perfil">Perfil</a>
+                  <a class="nav-item nav-link" href="/register">Registro</a>
+                  <a className="nav-item nav-link" href="/create_modules">Crear Modulo</a>
+                  <a className="nav-item nav-link" href="/my_modules">Mis Modulos</a>
+                  <a class="nav-item nav-link disabled" href="#">Disabled</a>
+              </div>
+          </div>
+      </Nav>
       <Form inline>
       <Button onClick={handleLogout} variant="danger" type="button"> Logout </Button>
       </Form>

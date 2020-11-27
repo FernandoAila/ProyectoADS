@@ -1,4 +1,5 @@
 'use strict';
+const bcrypt = require("bcrypt");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -11,18 +12,18 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    const all_rols = ['admin', 'jefe de proyecto', 'desarrollador', 'freelance', 'cliente'];
-    const newData = [];
+    const salt = await bcrypt.genSalt(10);
+    const hashPass = await bcrypt.hash('password', salt);
 
-    for (const rol in all_rols) {
-      const seedData = {
-        rolsName: all_rols[rol],
-        createdAt: new Date(),
-        updatedAt: new Date()
-      };
-      newData.push(seedData);
-    }
-    return queryInterface.bulkInsert('rols',newData);
+    return queryInterface.bulkInsert('Users', [{
+      email: 'example@example.com',
+      password: hashPass,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      nombre: 'admin',
+      apellido: 'admin',
+      telefono: '000000000'
+    }]);
   },
 
   down: async (queryInterface, Sequelize) => {

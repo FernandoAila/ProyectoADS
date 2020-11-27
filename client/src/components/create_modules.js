@@ -2,28 +2,25 @@ import React, { useState, useRef} from "react";
 import axios from "axios";
 import {Alert, Button, Card, Col, Form, Image, Spinner} from "react-bootstrap";
 
-const Register=(props)=>{
+const CreateModules=(props)=>{
     const form = useRef();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [nombre, setNombre] = useState("");
-    const [apellido, setApellido] = useState("");
-    const [telefono, setTelefono] = useState("");
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [start, setStart] = useState("");
+    const [finish, setFinish] = useState("");
+    const [estado, setEstado] = useState("");
 
-    const [loading, setLoading] = useState(false);
-    const [estado, setEstado] = useState('');
-
-    const onChangeEmail = (e) => {
-        const email = e.target.value;
-        setEmail(email);
+    const onChangeTitle = (e) => {
+        const title = e.target.value;
+        setTitle(title);
     };
 
-    const onChangePassword = (e) => {
-        const password = e.target.value;
-        setPassword(password);
+    const onChangePDescription = (e) => {
+        const description = e.target.value;
+        setDescription(description);
     };
 
-    const onChangeNombre = (e) => {
+    const onChangeStart = (e) => {
         const nombre = e.target.value;
         setNombre(nombre);
     };
@@ -104,7 +101,7 @@ const Register=(props)=>{
                             <option>Desarrollador</option>
                             <option>Freelance</option>
                             <option>Cliente</option>
-                            </Form.Control>
+                        </Form.Control>
                     </Form.Group>
 
                     <Form.Group>
@@ -124,4 +121,4 @@ const Register=(props)=>{
     );
 };
 
-export default Register;
+export default CreateModules;
