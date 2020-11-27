@@ -3,9 +3,13 @@ const router = require("express").Router();
 const { Projects,modules } = require("../models");
 
 
-router.get("/all",async (req,res)=>{
+router.get("/update:id",async (req,res)=>{
     try {
-        const modules= await Modules.findAll();
+        const modules= await Modules.findAll({
+            where: {
+            projectId: req.params
+            }
+          });
         return res.send(modules);
     } catch (err) {
         return res.status(400).send(err);
