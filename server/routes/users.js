@@ -31,7 +31,7 @@ router.post("/passUpdate",async (req,res)=>{
         const salt = await bcrypt.genSalt(10);
         const hashPass = await bcrypt.hash(req.body.newPassword, salt);    
         
-        const user = await Users.update({
+        await Users.update({
           password:hashPass,
         },{
           where: {
