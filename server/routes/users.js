@@ -4,10 +4,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authFunc = require("../helper/verifyToken");
 //Recoge los datos del usuario logeado
-router.get("/profile",authFunc.verifySign,async (req,res)=>{
+router.get("/profile",async (req,res)=>{
     try {
         let data=jwt.verify(req.header("token"), process.env.SECRET_TOKEN);
-        
+        if (!data) return res.status(401).send("no tienes autorizado entrar");
         const user = await Users.findOne({
             where: {
               id: data.id,
@@ -19,7 +19,7 @@ router.get("/profile",authFunc.verifySign,async (req,res)=>{
     }
 });
 
-router.post("/modify",authFunc.verifySign,async (req,res)=>{
+router.post("/modify",async (req,res)=>{
     try {
       let data=jwt.verify(req.body.token, process.env.SECRET_TOKEN);
       const user = await Users.findOne({
@@ -27,7 +27,7 @@ router.post("/modify",authFunc.verifySign,async (req,res)=>{
           id: data.id,
         },
       });
-      const validpass= await bcrypt.compare(req.body.oldPassword,user.password);
+      const validpass= await bcrypt.compare(req.body.oldpassword,user.password);
       if(!validpass){
         return res.status(401).send({message:"contraseña incorrecta"});
       }
@@ -44,16 +44,14 @@ router.post("/modify",authFunc.verifySign,async (req,res)=>{
 
 
 });
-router.post("/passUpdate",authFunc.verifySign,async (req,res)=>{
+router.post("/passUpdate",async (req,res)=>{
   try {
-      console.log("TEST");
       let data=jwt.verify(req.body.token, process.env.SECRET_TOKEN);
       const user = await Users.findOne({
           where: {
             id: data.id,
           },
         });
-        console.log("TEST2");
         const validPass = await bcrypt.compare(req.body.oldpassword, user.password);
         if (!validPass) return res.status(401).send({message:"constraseña antigua incorrecta"});
 

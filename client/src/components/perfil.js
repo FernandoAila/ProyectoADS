@@ -81,7 +81,7 @@ const Perfil= () =>{
             telefono: telefono,
         }).then((data) => {
             console.log(data);
-            window.location.reload();
+            //window.location.reload();
         }).catch((err)=>{
             console.log(err);
         });
