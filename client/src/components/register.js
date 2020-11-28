@@ -1,9 +1,9 @@
 import React, { useState, useRef} from "react";
 import axios from "axios";
-import {Alert, Button, Card, Col, Form, Image, Spinner} from "react-bootstrap";
-import {Redirect} from "react-router-dom";
-import {useSelector} from "react-redux";
-
+import {Alert, Button, Card, Col, Form, Image, Spinner,DropdownButton,Dropdown} from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect} from 'react-router-dom';
+import { login} from "../Redux/actions/auth";
 const Register=(props)=>{
     const form = useRef();
     const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ const Register=(props)=>{
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [telefono, setTelefono] = useState("");
-    const [rol, setRol] = useState("");
+    const [rol, setRol] = useState(1);
 
     const [loading, setLoading] = useState(false);
     const [estado, setEstado] = useState('');
@@ -51,6 +51,7 @@ const Register=(props)=>{
 
     const onChangeRol = (e) => {
         const rol = e.target.value;
+        console.log(rol);
         setRol(rol);
     };
 
@@ -60,7 +61,7 @@ const Register=(props)=>{
 
     const handleRegister = (e) => {
         e.preventDefault();
-
+        console.log(rol);
         setLoading(true);
         axios.post('http://localhost:8080/auth/register', {
             email: email,
@@ -78,7 +79,9 @@ const Register=(props)=>{
         });
 
     };
-
+   // if (!isLogged) {
+       // return <Redirect to="/login" />;
+     // }
     return (
         <Col md="13">
             <Card className="card card-container">
@@ -115,15 +118,12 @@ const Register=(props)=>{
                                       value={telefono} onChange={onChangeTelefono}/>
                     </Form.Group>
 
-                    <Form.Group controlId="formBasicRol">
-                        <label htmlFor="rol">Rol</label>
-                        <Form.Control as="select" type="rol"
-                                      value={rol} onChange={onChangeRol}>
-                            <option value={'jefe de proyecto'}>Jefe de Proyecto</option>
-                            <option value={'desarrollador'}>Desarrollador</option>
-                            <option value={'freelance'}>Freelance</option>
-                            <option value={'cliente'}>Cliente</option>
-                            </Form.Control>
+                    <Form.Group as={Col} controlId="formGridState">
+                        <Form.Label>Rol</Form.Label>
+                        <Form.Control as="select" defaultValue="Rol" onChange={onChangeRol}>
+                            <option eventKey="jefe de proyecto">1</option>
+                            <option eventKey="desarrollador">2</option>
+                        </Form.Control>
                     </Form.Group>
 
                     <Form.Group>
