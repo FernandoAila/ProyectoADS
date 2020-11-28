@@ -35,7 +35,6 @@ const Perfil= () =>{
         );
     }
 
-
     const onChangeEdit = (e) => {
         const edit = e.target.value;
         setEdit(edit);

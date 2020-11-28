@@ -15,7 +15,15 @@ const Register=(props)=>{
 
     const [loading, setLoading] = useState(false);
     const [estado, setEstado] = useState('');
+
     const isLogged = useSelector((store) => store.authReducer.isLogged);
+
+    if(!isLogged){
+        return(
+            <Redirect to="/login"  />
+        );
+    }
+
     const onChangeEmail = (e) => {
         const email = e.target.value;
         setEmail(email);
@@ -78,7 +86,7 @@ const Register=(props)=>{
         <Col md="13">
             <Card className="card card-container">
                 {estado ? <b> color={"green"}> Registro Exitoso </b>
-                    :<b> Ingrese los datos de nuevo usuario </b>}
+                    :<b> Ingrese los datos de nuevo usuario </b> }
                 <Form  ref={form}>
                     <Form.Group controlId="formBasicEmail">
                         <label htmlFor="email">Email</label>
@@ -127,7 +135,7 @@ const Register=(props)=>{
                         </Button>
                     </Form.Group>
                     {estado &&  <Alert variant="danger">Datos incorrectos.
-                    </Alert>}
+                    </Alert> }
                 </Form>
             </Card>
         </Col>
