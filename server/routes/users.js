@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { verifySign } = require("../helper/verifyToken");
 const { Users,rols,users_rols } = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -44,5 +43,35 @@ router.post("/modify",authFunc.verifySign,async (req,res)=>{
     }
 
 
-})
+});
+router.post("/passUpdate",authFunc.verifySign,async (req,res)=>{
+  try {
+      console.log("TEST");
+      let data=jwt.verify(req.body.token, process.env.SECRET_TOKEN);
+      const user = await Users.findOne({
+          where: {
+            id: data.id,
+          },
+        });
+        console.log("TEST2");
+        const validPass = await bcrypt.compare(req.body.oldpassword, user.password);
+        if (!validPass) return res.status(401).send({message:"constraseña antigua incorrecta"});
+
+        //hasheo nueva contraseña
+        const salt = await bcrypt.genSalt(10);
+        const hashPass = await bcrypt.hash(req.body.newpassword, salt);    
+        
+        await Users.update({
+          password:hashPass,
+        },{
+          where: {
+            id: data.id,
+          },
+        });
+      return res.status(200).send({message:"Cambio de contraseña realizado correctamente"});
+  } catch (err) {
+      return res.status(400).send(err);
+  }
+});
+
 module.exports = router;

@@ -95,11 +95,11 @@ const Perfil= () =>{
             token:localStorage.getItem('token')
         }).then((data) => {
             console.log(data);
-            setEdit(0);
-            setEstado(1);
+            //setEdit(0);
+            setEstado(3);
         }).catch((err)=>{
             console.log(err);
-            setEstado(2);
+            setEstado(1);
         });
         }
         else{
