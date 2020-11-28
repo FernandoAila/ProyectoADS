@@ -7,8 +7,9 @@ const authFunc = require("../helper/verifyToken");
 const verify = require("jsonwebtoken/verify");
 const { verifySign, isJefep } = require("../helper/verifyToken");
 //Maneja el registro de usuarios
-router.post("/register",[verifySign,isJefep] ,async (req, res) => {
+router.post("/register" ,async (req, res) => {
   try {
+    console.log(req.body.rol+"AAAAAAAAAAAAAAAAAAAA");
     const emailValid = await Users.findOne({
       where: {
         email: req.body.email,
@@ -17,36 +18,32 @@ router.post("/register",[verifySign,isJefep] ,async (req, res) => {
     if (emailValid) return res.status(400).send("este usuario ya existe");
     //se encripta la constrasena
     const salt = await bcrypt.genSalt(10);
-    const hashPass = await bcrypt.hash(req.body.pass, salt);
+    const hashPass = await bcrypt.hash(req.body.password, salt);
     //se crea el usuario
     const user = await Users.create({
-      nombre:req.body.name,
-      apellido:req.body.surname,
+      nombre:req.body.nombre,
+      apellido:req.body.apellido,
       email: req.body.email,
-      telefono:req.body.contact,
+      telefono:req.body.telefono,
       password: hashPass,
-    });
-    const af = await rols.findOne({
-      where: {
-        rolsName: req.body.rol,
-      },
     });
     //Añadimos el id del usuario y el rol a la BD
     await users_rols.create({
-      rolsId: af.id,
+      rolsId: req.body.rol,
       userId:user.id,
     }).then(()=>{console.log("ok");
     }).catch((err)=>console.log(err));
     //Enviamos un correo electronico al email del user
+    /*
     const sendEmail = () => {
-      transporter.sendMail(mailer(user,req.body.pass), (err, info) => {
+      transporter.sendMail(mailer(user,req.body.password), (err, info) => {
         if (err) {
           res.status(400).send("Error al mandar el emial")
         }
         console.log(`** Email enviado**`, info.response)
       })
     };
-    sendEmail();
+    sendEmail();*/
     return res.send(user);
   } catch (error) {
     return res.status(400).send(error);

@@ -40,8 +40,9 @@ const Login = (props) => {
         console.log(data);
         dispatch(login(data));
         localStorage.setItem('token', data.data.accessToken);
-        window.location.reload();
-        dispatch(redirect("/perfil"));
+        localStorage.setItem('userId', data.data.id);
+        //window.location.reload();
+        //dispatch(redirect("/perfil"));
       }).catch(()=>{
         setEstado(true);
         setLoading(false);
