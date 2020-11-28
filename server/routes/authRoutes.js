@@ -9,7 +9,6 @@ const { verifySign, isJefep } = require("../helper/verifyToken");
 //Maneja el registro de usuarios
 router.post("/register" ,async (req, res) => {
   try {
-    console.log(req.body.rol+"AAAAAAAAAAAAAAAAAAAA");
     const emailValid = await Users.findOne({
       where: {
         email: req.body.email,
@@ -33,17 +32,16 @@ router.post("/register" ,async (req, res) => {
       userId:user.id,
     }).then(()=>{console.log("ok");
     }).catch((err)=>console.log(err));
-    //Enviamos un correo electronico al email del user
-    /*
     const sendEmail = () => {
-      transporter.sendMail(mailer(user,req.body.password), (err, info) => {
+    transporter.sendMail(mailer(user,req.body.password), (err, info) => {
         if (err) {
-          res.status(400).send("Error al mandar el emial")
+          console.log(err);
+          return res.status(400).send(err);
         }
         console.log(`** Email enviado**`, info.response)
       })
     };
-    sendEmail();*/
+    sendEmail();
     return res.send(user);
   } catch (error) {
     return res.status(400).send(error);

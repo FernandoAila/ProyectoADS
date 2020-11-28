@@ -5,7 +5,7 @@
 const jwt = require("jsonwebtoken");
 const {users_rols } = require("../models");
 function verifySign(req, res, nxt) {
-  const token = req.header("auth-token");
+  const token = req.header("token");
   if (!token) return res.status(401).send("no tienes autorizado entrar");
   try {
     const payload = jwt.verify(token, process.env.SECRET_TOKEN);

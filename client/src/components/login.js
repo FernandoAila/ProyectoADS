@@ -40,8 +40,7 @@ const Login = (props) => {
         console.log(data);
         dispatch(login(data));
         localStorage.setItem('token', data.data.accessToken);
-        localStorage.setItem('userId', data.data.id);
-        //window.location.reload();
+        window.location.reload();
         //dispatch(redirect("/perfil"));
       }).catch(()=>{
         setEstado(true);
