@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Clients_Projects.init({
-    clientId: DataTypes.INTEGER,
-    projectId: DataTypes.INTEGER
+    clientId: {type:DataTypes.INTEGER,primaryKey: true},
+    projectId: {type:DataTypes.INTEGER,primaryKey: true},
   }, {
     sequelize,
     modelName: 'Clients_Projects',
