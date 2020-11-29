@@ -11,6 +11,12 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    return queryInterface.bulkInsert('Projects', [{
+      nameProject: 'ProyectDemo',
+      descriptionProject: 'Proyecto de prueba',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }]);
   },
 
   down: async (queryInterface, Sequelize) => {
