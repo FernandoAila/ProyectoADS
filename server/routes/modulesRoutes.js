@@ -1,6 +1,7 @@
 const express = require("express");
+const { where } = require("sequelize/types");
 const router = require("express").Router();
-const { Modules,Requirements,Requirements_Modules} = require("../models");
+const { Modules,Requirements,Requirements_Modules,Developers_Modules} = require("../models");
 
 //Muestra todos los modulos que son parte de un Proyecto especifico, ademas de sus requerimientos asociados
 router.get("/allFromProject",async (req,res)=>{
@@ -38,7 +39,8 @@ router.post("/create",async (req,res)=>{
         const module = await Modules.create({
             nameModule:req.body.requirementName,
             descriptionModule:req.body.requirementDescription,
-            projectId: req.body.idProject
+            projectId: req.body.idProject,
+            assigned: false
         }).then( (data) =>{return res.status(200).send(module )} )
     } 
     catch (error) {
@@ -65,6 +67,110 @@ router.post("/addRequirement",async (req,res)=>{
     }
     catch (error) {
         return res.status(400).send("Hubo un error al añadir el requerimiento");    
+    }
+});
+
+//Asignar desarrollador
+router.post("/AssignDeveloper",async (req,res)=>{
+    try {
+        console.log(req.body);
+
+        //encuentra al modulo dado el nombre
+        const module = await Modules.findOne({
+            where: {
+                nameModule: req.body.idModule,
+            },
+        });
+
+        //encuentra al usuario dado el nombre
+        const user = await Users.findOne({
+            where: {
+                name: req.body.developerName,
+                apellido: developerLastName 
+            },
+        });
+
+        //revisa si ya está asignado
+        const moduleValid = await Developers_Modules.findOne({
+            where: {
+                moduleId: module.Id,
+            },
+          });
+        if(moduleValid) return res.status(400).send("Ya está asignado este modulo");
+
+        //lo crea en la tabla de asignacion
+        const developer_modules = await Developers_Modules.create({
+            developerId:user.id,
+            moduleId:module.Id,
+        }).catch((err)=>console.log(err));
+
+        //Marca el modulo como asignado
+        const moduleAssig = await Modules.update({
+            assigned:true,
+            where:{
+                moduleId:module.Id
+            }
+        }).catch((err)=>console.log(err));
+
+        return res.status(200).send({developer_modules,moduleAssig});
+    } 
+    catch (error) {
+        return res.status(400).send("Hubo un error al asignar el modulo");    
+    }
+});
+
+// Postular a un modulo
+router.post("/Apply",async (req,res)=>{
+    try {
+        console.log(req.body);
+
+        //encuentra al modulo dado el nombre
+        const module = await Modules.findOne({
+            where: {
+                nameModule: req.body.idModule,
+            },
+        });
+
+        //encuentra al usuario dado el nombre
+        const user = await Users.findOne({
+            where: {
+                email: req.body.developerMail
+            },
+        });
+
+        //lo crea en la tabla de postulacion
+        const freelance_module = await Freelance_Modules.create({
+            developerId:user.id,
+            moduleId:module.Id,
+        }).catch((err)=>console.log(err));
+
+        return res.status(200).send(freelance_module);
+    } 
+    catch (error) {
+        return res.status(400).send("Hubo un error al asignar el modulo");    
+    }
+});
+
+//Devuelve modulos no asignados
+router.get("/AllUnasigned",async (req,res)=>{
+    try {
+
+        //encuentra al proyecto dado el nombre
+        const project = await Projects.findOne({
+            where: {
+                nameProject: req.body.projectName,
+            },
+        });
+        //Busca todos los modelos no asignados dado un proyecto
+        const modules= await Modules.findAll({
+            where: {
+                projectId: project.projectId,
+                assigned: false
+            }
+        });
+        return res.send(modules);
+    } catch (err) {
+        return res.status(400).send(err);
     }
 });
 

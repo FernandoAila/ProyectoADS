@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
   Modules.init({
     nameModule: DataTypes.STRING,
     descriptionModule: DataTypes.STRING,
-    projectId: DataTypes.INTEGER
+    projectId: DataTypes.INTEGER,
+    assigned: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Modules',
