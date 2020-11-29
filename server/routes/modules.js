@@ -1,38 +1,39 @@
 const express = require("express");
 const router = require("express").Router();
-const { Projects,modules } = require("../models");
+const { Projects,Modules } = require("../models");
 
 
-router.get("/update:id",async (req,res)=>{
+router.get("/allFromProject",async (req,res)=>{
     try {
         const modules= await Modules.findAll({
             where: {
-            projectId: req.params
+                projectId: req.query.projectId
             }
-          });
+        });
         return res.send(modules);
     } catch (err) {
         return res.status(400).send(err);
     }
 });
-router.get("/create",async (req,res)=>{
+router.post("/create",async (req,res)=>{
     try {
         //Revisa si un modulo con el mismo nombre existe
+        console.log(req.body.projectId);
         const moduleValid = await Modules.findOne({
             where: {
-                nameProject: req.body.projectName,
+                nameModule: req.body.moduleName,
+                projectId: req.body.projectId
             },
           });
         if(moduleValid) return res.status(400).send("Ya existe un modulo con el mismo nombre");
-
-        const module = await Modules.create({
+        await Modules.create({
             nameModule:req.body.moduleName,
-            descriptionModule:req.body.moduleDescription,
-            projectId:projectId,
-        }).then( (data) => {return res.status(200).send(module)})
+            descriptionModule:req.body.descriptionModule,
+            projectId:req.body.projectId,
+        }).then( (data) => {return res.status(200).send(data)});
     } 
     catch (error) {
-        return res.status(400).send("Hubo un error al crear el proyecto");    
+        return res.status(400).send(err);    
     }
 });
 router.get("/delete:id",async (req,res)=>{
