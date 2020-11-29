@@ -1,24 +1,20 @@
 import React, { useState, useRef,useEffect} from "react";
 import { login} from "../Redux/actions/auth";
-import {ListGroup} from "react-bootstrap"
+import {Table,Button} from "react-bootstrap"
 import { useSelector, useDispatch} from "react-redux";
-const Projects= (props)=>{
 
-    const isLogged = useSelector((store) => store.authReducer.isLogged);
-
-
-    return(
-    <div>        
-    <h1>Projectos</h1>
-    <ListGroup>
-      <ListGroup.Item>Cras justo odio</ListGroup.Item>
-      <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-      <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-      <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-      <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-    </ListGroup>
-    </div>
-
-    )
+const Project=()=>{
+return(<tr>
+    <td>                                            
+        <h6 className="mb-1">Nombre Proyecto</h6>
+        <p className="m-0"> Descripcion</p>
+    </td>
+    <td>
+    <Button variant="primary">Añadir requerimientos</Button>
+    </td>
+    <td>
+    <Button variant="primary">Añadir modulos</Button>
+    </td>
+    </tr>)
 }
-export default Projects;
+export default Project;
