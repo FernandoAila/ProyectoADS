@@ -18,6 +18,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         foreignKey: true
       },
+      assigned: {
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
