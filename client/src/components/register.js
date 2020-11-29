@@ -63,13 +63,28 @@ const Register=(props)=>{
         e.preventDefault();
         console.log(rol);
         setLoading(true);
+        var rolnum;
+        //se cambia el valor de texto del rol al valor numerico que tiene el rol como id.
+        switch (rol) {
+            case 'Jefe de proyecto':
+                rolnum='2';
+            case 'Desarrollador':
+                rolnum='3';
+            case 'freelance':
+                rolnum='4';
+            case 'Cliente':
+                rolnum='5';
+            default:
+                rolnum='5';
+          }
+
         axios.post('http://localhost:8080/auth/register', {
             email: email,
             password: password,
             nombre: nombre,
             apellido: apellido,
             telefono: telefono,
-            rol: rol,
+            rol: rolnum,
         }).then((data) => {
             console.log(data);
             setEstado(true);
@@ -121,8 +136,8 @@ const Register=(props)=>{
                     <Form.Group as={Col} controlId="formGridState">
                         <Form.Label>Rol</Form.Label>
                         <Form.Control as="select" defaultValue="Rol" onChange={onChangeRol}>
-                            <option eventKey="jefe de proyecto">1</option>
-                            <option eventKey="desarrollador">2</option>
+                            <option eventKey="Jefe de proyecto">Jefe de proyecto</option>
+                            <option eventKey="Cliente">Cliente</option>
                         </Form.Control>
                     </Form.Group>
 

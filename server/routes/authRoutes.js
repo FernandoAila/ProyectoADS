@@ -32,6 +32,7 @@ router.post("/register" ,async (req, res) => {
       userId:user.id,
     }).then(()=>{console.log("ok");
     }).catch((err)=>console.log(err));
+    /*
     const sendEmail = () => {
     transporter.sendMail(mailer(user,req.body.password), (err, info) => {
         if (err) {
@@ -42,6 +43,7 @@ router.post("/register" ,async (req, res) => {
       })
     };
     sendEmail();
+    */
     return res.send(user);
   } catch (error) {
     return res.status(400).send(error);

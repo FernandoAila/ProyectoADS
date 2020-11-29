@@ -20,7 +20,7 @@ const Navb=()=>{
                   <a class="nav-item nav-link" href="/perfil">Perfil</a>
                   <a class="nav-item nav-link" href="/register">Registro</a>
                   <a className="nav-item nav-link" href="/projects">Proyectos</a>
-                  <a className="nav-item nav-link" href="/my_modules">Mis Modulos</a>
+                  <a className="nav-item nav-link" href="/my_modules">Modulos</a>
                   <a class="nav-item nav-link disabled" href="#">Disabled</a>
               </div>
           </div>
