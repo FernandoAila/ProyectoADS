@@ -100,7 +100,7 @@ const Register=(props)=>{
     return (
         <Col md="13">
             <Card className="card card-container">
-                {estado ? <b> color={"green"}> Registro Exitoso </b>
+                {estado ? <b> color={"green"} Registro Exitoso </b>
                     :<b> Ingrese los datos de nuevo usuario </b> }
                 <Form  ref={form}>
                     <Form.Group controlId="formBasicEmail">
