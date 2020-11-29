@@ -1,6 +1,6 @@
 const express = require("express");
 const router = require("express").Router();
-const { Projects,modules,Requirements } = require("../models");
+const { Projects,Modules,Requirements,Clients_Projects } = require("../models");
 const { Op } = require("sequelize");
 
 //Muestra todos los proyectos disponibles
@@ -50,7 +50,7 @@ router.post("/create",async (req,res)=>{
     catch (error) {
         return res.status(400).send("Hubo un error al crear el proyecto");    
     }
-    });
+});
 //Muestra solo el proyecto
 router.get("/:id",async (req,res)=>{
     try {
@@ -62,6 +62,29 @@ router.get("/:id",async (req,res)=>{
         return res.send(projects);
     } catch (err) {
         return res.status(400).send(err);
+    }
+});
+
+router.post("/AssignClient",async (req,res)=>{
+    try {
+        //Revisa si un proyecto con el mismo nombre ya está asignado
+        console.log(req.body);
+        const projectValid = await Clients_Projects.findOne({
+            where: {
+                projectId: req.body.idProject,
+            },
+          });
+        if(projectValid) return res.status(400).send("Ya está asignado este proyecto");
+
+        const client_project = await Clients_Projects.create({
+            projectId:req.body.idProject,
+            clientId:req.body.idClient,
+        }).catch((err)=>console.log(err));
+
+        return res.status(200).send(client_project);
+    } 
+    catch (error) {
+        return res.status(400).send("Hubo un error al asignar el proyecto");    
     }
 });
 
