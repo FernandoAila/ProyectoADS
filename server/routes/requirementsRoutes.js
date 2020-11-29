@@ -2,7 +2,7 @@ const express = require("express");
 const router = require("express").Router();
 const { Requirements,modules } = require("../models");
 
-//Muestra todos los proyectos disponibles
+//Muestra todos los requerimientos que son parte de un Proyecto especifico
 router.get("/allFromProject",async (req,res)=>{
     try {
         const requirements= await Requirements.findAll({
@@ -16,25 +16,25 @@ router.get("/allFromProject",async (req,res)=>{
     }
 });
 
-//Crea un projecto
-router.get("/create",async (req,res)=>{
+//Crea un requerimiento
+router.post("/create",async (req,res)=>{
     try {
-        //Revisa si un proyecto con el mismo nombre existe
-        const projectValid = await Requirements.findOne({
+        //Revisa si un requerimiento con el mismo nombre existe
+        const requirementValid = await Requirements.findOne({
             where: {
                 nameRequirement: req.body.requirementName,
             },
           });
-        if(projectValid) return res.status(400).send("Ya existe este proyecto");
+        if(requirementValid) return res.status(400).send("Ya existe este requerimiento");
 
-        const project = await Requirements.create({
+        const requirement = await Requirements.create({
             nameRequirement:req.body.requirementName,
             descriptionRequirement:req.body.requirementDescription,
             projectId: req.body.idProject
-        }).then( (data) =>{return res.status(200).send(project)} )
+        }).then( (data) =>{return res.status(200).send(requirement )} )
     } 
     catch (error) {
-        return res.status(400).send("Hubo un error al crear el proyecto");    
+        return res.status(400).send("Hubo un error al crear el requerimiento");    
     }
 });
 

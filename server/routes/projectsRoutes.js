@@ -11,8 +11,8 @@ router.get("/all",async (req,res)=>{
         return res.status(400).send(err);
     }
 });
-//Crea un projecto
-router.get("/create",async (req,res)=>{
+//Crea un proyecto
+router.post("/create",async (req,res)=>{
     try {
         //Revisa si un proyecto con el mismo nombre existe
         const projectValid = await Projects.findOne({
