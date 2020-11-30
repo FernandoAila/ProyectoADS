@@ -19,6 +19,7 @@ app.use("/test",require("./routes/test"));
 app.use("/users",require("./routes/users"));
 app.use("/modules",require("./routes/modules"));
 app.use("/projects",require("./routes/projectsRoutes"));
+app.use("/modulesRoutes",require("./routes/modulesRoutes"));
 app.use("/requirements",require("./routes/requirementsRoutes"));
 const PUERTO= process.env.PORT||8080;
 app.listen(

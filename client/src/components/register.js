@@ -134,6 +134,8 @@ const Register=(props)=>{
                         <Form.Label>Rol</Form.Label>
                         <Form.Control as="select" defaultValue="Rol" onChange={onChangeRol}>
                             <option eventKey="Jefe de proyecto">Jefe de proyecto</option>
+                            <option eventKey="Desarrollador">Desarrollador</option>
+                            <option eventKey="freelance">Freelance</option>
                             <option eventKey="Cliente">Cliente</option>
                         </Form.Control>
                     </Form.Group>

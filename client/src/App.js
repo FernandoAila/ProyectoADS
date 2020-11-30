@@ -11,6 +11,7 @@ import Register from "./components/register.js"
 import ListsProjects from "./components/listsProjects.js"
 import AddProyect from "./components/add_proyect.js"
 import  ShowProject   from "./components/showProyect.js";
+import NoCotizadosModulos from "./components/modulos_no_cotizados.js";
 import{BrowserRouter as Router, Switch,Route,Link}from 'react-router-dom';
 
 function App() {
@@ -39,6 +40,10 @@ function App() {
       <Route path="/projects">
         <Navb/>
         <ListsProjects/>
+      </Route>
+      <Route path="/modules">
+        <Navb/>
+        <NoCotizadosModulos/>
       </Route>
       <Route path="/">
         <Index/>

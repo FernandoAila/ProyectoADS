@@ -1,25 +1,31 @@
-import React from "react";
+import axios from "axios";
+import React, { useState, useRef,useEffect} from "react";
 
 const NoCotizadosModulos=()=>{
 
     const [modulos, setModulos] = useState([]);
     useEffect(() => {
-        axios.get("http://localhost:8080/mo/",
+        axios.get("http://localhost:8080/modulesRoutes/AllUnasigned",
         {
-            headers:
-            {
-                'token':localStorage.getItem('token')
-            }
-        }
-        ).then(response => {
-          setEmail(response.data.email);
-          setNombre(response.data.nombre);
-          setApellido(response.data.apellido);
-          setTelefono(response.data.telefono);
-          setLoading(false);
-        });
+      }).then(response => {
+          console.log(response.data);
+          setModulos(response.data);
+      });
       }, []);
     return(
-        <h1></h1>
-    )
+        <div>
+                    <h1>Modulos no cotizados</h1>
+            {modulos.map( (modulo,index) => (
+                <div>
+                    <strong>Nombre</strong>
+                <li 
+                className="modulo" key={index}>{modulo.nameModule}</li>
+                <strong>Descripcion</strong>
+                                <div
+                className="modulo" key={index}>{modulo.descriptionModule}</div>
+                </div>
+            ))}
+        </div>
+    );
 }
+export default NoCotizadosModulos;

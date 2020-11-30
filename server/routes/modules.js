@@ -30,6 +30,7 @@ router.post("/create",async (req,res)=>{
             nameModule:req.body.moduleName,
             descriptionModule:req.body.descriptionModule,
             projectId:req.body.projectId,
+            assigned: false
         }).then( (data) => {return res.status(200).send(data)});
     } 
     catch (error) {

@@ -1,5 +1,4 @@
 const express = require("express");
-const { where } = require("sequelize/types");
 const router = require("express").Router();
 const { Modules,Requirements,Requirements_Modules,Developers_Modules} = require("../models");
 
@@ -32,13 +31,14 @@ router.post("/create",async (req,res)=>{
         const moduleValid = await Modules.findOne({
             where: {
                 nameModule: req.body.moduleName,
+                projectId: req.body.projectId
             },
           });
         if(moduleValid) return res.status(400).send("Ya existe este modulo");
 
         const module = await Modules.create({
-            nameModule:req.body.requirementName,
-            descriptionModule:req.body.requirementDescription,
+            nameModule:req.body.moduleName,
+            descriptionModule:req.body.descriptionModule,
             projectId: req.body.idProject,
             assigned: false
         }).then( (data) =>{return res.status(200).send(module )} )
@@ -154,17 +154,10 @@ router.post("/Apply",async (req,res)=>{
 //Devuelve modulos no asignados
 router.get("/AllUnasigned",async (req,res)=>{
     try {
-
-        //encuentra al proyecto dado el nombre
-        const project = await Projects.findOne({
-            where: {
-                nameProject: req.body.projectName,
-            },
-        });
+        console.log("hohoo");
         //Busca todos los modelos no asignados dado un proyecto
         const modules= await Modules.findAll({
             where: {
-                projectId: project.projectId,
                 assigned: false
             }
         });
