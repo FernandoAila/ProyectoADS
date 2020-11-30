@@ -1,5 +1,7 @@
 # Instrucciones #
 
+Se debe crear la carpeta *server/config* y el archivo *server/config/config.json* y en el poner la configuracion para la base de datos
+
 ## Para ejecutar el backend se debe navegar hacial la carpeta *server* y ejecutar los siguientes comandos ##
 
 /> npm install
