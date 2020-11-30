@@ -101,5 +101,30 @@ router.get("/AllInterns",async (req,res)=>{
 });
 
 //Devuelve a los Freelance que postulador a un modulo dado
+router.get("/AllInterns",async (req,res)=>{
+  try {
+      //Busca todos los desarrolladores en la tabla users_rols
+      const internsId = await Users_Rols.findAll({
+          where: {
+            rolsId: 3
+          }
+      });
+      var arrIntern;
+      //Busca todos los usuarios que sea desarrolladores internos
+      for(const internsRols of internsId){
+        console.log(interns)
+        const intern = await Users.findOne({
+          where: {
+            id: internsRols.userId
+          }
+        });
+        arrIntern.push({intern})
+      }
+
+      return res.send(arrIntern);
+  } catch (err) {
+      return res.status(400).send(err);
+  }
+});
 
 module.exports = router;

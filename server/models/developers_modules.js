@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Developers_Modules.init({
-    developerId: DataTypes.INTEGER,
-    moduleId: DataTypes.INTEGER
+    developerId: {type:DataTypes.INTEGER,primaryKey: true},
+    moduleId: {type:DataTypes.INTEGER,primaryKey: true}
   }, {
     sequelize,
     modelName: 'Developers_Modules',
