@@ -11,7 +11,9 @@ module.exports = {
         nameModule: all_modName[mod],
         descriptionModule: 'Modulo de prueba',
         projectId: 1,
-        assigned: all_modAssign[mod]
+        assigned: all_modAssign[mod],
+        createdAt:new Date(),
+        updatedAt:new Date()
       };
       newData.push(seedData);
     }

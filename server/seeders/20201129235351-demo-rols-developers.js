@@ -6,7 +6,7 @@ module.exports = {
     const all_rids = [3,3,4];
     const newData = [];
 
-    for (const id in all_ids) {
+    for (const id in all_dids) {
       const seedData = {
         rolsId: all_rids[id],
         userId: all_dids[id],
@@ -15,7 +15,7 @@ module.exports = {
       };
       newData.push(seedData);
     }
-    return queryInterface.bulkInsert('Users_Rols',newData);
+    return queryInterface.bulkInsert('users_rols',newData);
   },
 
   down: async (queryInterface, Sequelize) => {
