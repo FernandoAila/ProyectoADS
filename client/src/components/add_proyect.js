@@ -49,7 +49,7 @@ const AddProyect= (props)=>{
     return(
         
         <Card style={{ width: '40rem' }} className="text-center">
-            {estado =! 0 ? <Redirect to={"/projects/"+estado} /> : null}
+            {estado ==! 0 ? <Redirect to={"/projects/"+estado} /> : null}
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Nombre de proyecto</Form.Label>
                 <Form.Control type="text" placeholder="Nombre" onChange={onChangeName}/>

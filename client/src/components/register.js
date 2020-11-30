@@ -50,9 +50,23 @@ const Register=(props)=>{
     };
 
     const onChangeRol = (e) => {
-        const rol = e.target.value;
-        console.log(rol);
-        setRol(rol);
+        const rola = e.target.value;
+        let rolnum=0;
+        switch (rola) {
+            case 'Jefe de proyecto':
+                rolnum='2';
+                break;
+            case 'Desarrollador':
+                rolnum='3';
+                break;
+            case 'freelance':
+                rolnum='4';
+                break;
+            case 'Cliente':
+                rolnum='5';
+                break;
+          };
+        setRol(rolnum);
     };
 
     const validateForm = (e) => {
@@ -61,22 +75,8 @@ const Register=(props)=>{
 
     const handleRegister = (e) => {
         e.preventDefault();
-        console.log(rol);
         setLoading(true);
-        var rolnum;
         //se cambia el valor de texto del rol al valor numerico que tiene el rol como id.
-        switch (rol) {
-            case 'Jefe de proyecto':
-                rolnum='2';
-            case 'Desarrollador':
-                rolnum='3';
-            case 'freelance':
-                rolnum='4';
-            case 'Cliente':
-                rolnum='5';
-            default:
-                rolnum='5';
-          }
 
         axios.post('http://localhost:8080/auth/register', {
             email: email,
@@ -84,7 +84,7 @@ const Register=(props)=>{
             nombre: nombre,
             apellido: apellido,
             telefono: telefono,
-            rol: rolnum,
+            rol: rol,
         }).then((data) => {
             console.log(data);
             setEstado(true);
@@ -94,9 +94,6 @@ const Register=(props)=>{
         });
 
     };
-   // if (!isLogged) {
-       // return <Redirect to="/login" />;
-     // }
     return (
         <Col md="13">
             <Card className="card card-container">

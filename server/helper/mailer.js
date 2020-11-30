@@ -4,14 +4,14 @@ const transporter = nodemailer.createTransport({
     host: "smtp.mailtrap.io",
     port: 2525,
     auth: {
-      user: process.env.EMAIL_LOGIN,
-      pass: process.env.EMAIL_PASSWORD,
+      user: "23fc7d3cc6d871",
+      pass:"6d8bcd1427befb",
     }
 });
 
 //Texto por defecto al enviar el email.
 const mailer = (user,pass) => {
-  const from = process.env.EMAIL_LOGIN;
+  const from = "email@platamforma.com";
   const to = user.email;
   const subject = "Bienvenido a la plataforma NOMBRE_PLATAFORMA";
   const html = `

@@ -90,7 +90,7 @@ const ListsProjects= (props)=>{
                 </InputGroup>
                 <InputGroup.Append>
                     <Button variant="outline-secondary" onClick={retrieveProjects}>Buscar</Button>{' '}
-                    <Link to="/proyects/addproyect">
+                    <Link to="projects/addproject">
                         <Button variant="outline-primary">
                                 Añadir Proyecto
                             </Button>
@@ -150,12 +150,10 @@ const ListsProjects= (props)=>{
               </label>{" "}
               {currentProject.descriptionProject}
             </div>
-
             <Link
               to={"/projects/"+currentProject.id}
-              className="badge badge-warning"
             >
-              Editar
+              <Button variant="primary">Mostrar proyecto</Button>
             </Link>
           </div>
         ) : (

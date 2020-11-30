@@ -36,24 +36,35 @@ router.post("/create",async (req,res)=>{
         return res.status(400).send(err);    
     }
 });
-router.get("/delete:id",async (req,res)=>{
+router.post("/delete",async (req,res)=>{
     try {
-        await Modules.destroy({where:req.params});
+        console.log(req.body.id);
+         await Modules.destroy({
+            where: {
+              id: req.body.id
+            }
+          }).catch(err=>console.log(err));
+          return res.status(200).send("ok");
     } catch (err) {
        return res.status(400).send(err);
     }
 });
-router.get("/update:id",async (req,res)=>{
+router.post("/update",async (req,res)=>{
     try {
-        const module= await Modules.Update({
-            nameModule:req.body.name,
-            descriptionModule:req.body.description
-        },{
-            where:{
-                moduleId:req.params,
-            }});
-       return res.send(module);
+        console.log(req.body.nameModule,req.body.descriptionModule,req.body.idM,req.body.projectId);
+        await  Modules.update(
+            {
+            nameModule:req.body.nameModule,
+            descriptionModule:req.body.descriptionModule},
+        {
+        where:{
+                id:req.body.idM,
+            }}).catch(
+                (err)=>( console.log(err) ));
+        console.log("ok");
+       return res.send("ok");
     } catch (err) {
+        console.log(err);
        return res.status(400).send(err);
     }
 });

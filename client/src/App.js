@@ -28,6 +28,10 @@ function App() {
         <Navb/>
         <Register/>
       </Route>
+      <Route path="/projects/addproject">
+        <Navb/>
+        <AddProyect/>
+      </Route>
       <Route path="/projects/:id">
         <Navb/>
         <ShowProject/>
@@ -35,10 +39,6 @@ function App() {
       <Route path="/projects">
         <Navb/>
         <ListsProjects/>
-      </Route>
-      <Route path="/projects/addproyect">
-        <Navb/>
-        <AddProyect/>
       </Route>
       <Route path="/">
         <Index/>

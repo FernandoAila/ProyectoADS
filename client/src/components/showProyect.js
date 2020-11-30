@@ -11,8 +11,13 @@ const ShowProject= (props)=>{
     const [reqAddName,setReqName]=useState("");
     const [reqAddDesc,setReqDesc]=useState("")
     const [modules, setModules]=useState([]);
+    const [moduleId, setModuleId]=useState([]);
     const [pName,setPname]=useState("");
+    const [cNameGet,setCnameGet]=useState("");
+    const [cName,setCname]=useState("");
     const [showR, setShowR] = useState(false);
+    const [showC, setShowC] = useState(false);
+    const [showMM, setShowMM] = useState(false);
     const [showM, setShowM] = useState(false);
     const [requirements, setRequirements] = useState([]);
     let { id } = useParams();
@@ -21,7 +26,7 @@ const ShowProject= (props)=>{
         ).then(response => {
           setPdescription(response.data.descriptionProject);
           setPname(response.data.nameProject);
-
+          setCnameGet(response.data.client);
           axios.get("http://localhost:8080/requirements/allFromProject",
           {
               params:{
@@ -48,6 +53,14 @@ const ShowProject= (props)=>{
       const handleShowR = () => {setShowR(true);};
       const handleCloseM = () =>{ setShowM(false);};
       const handleShowM = () => {setShowM(true);};
+      const handleShowCli = () => {setShowC(true);};
+      const handleCloseCli = () => {setShowC(false);};
+      const handleShowModM = (e) => {
+        e.stopPropagation();
+        let idObj = e.target.dataset;
+        setModuleId(idObj.test);
+        setShowMM(true);};
+      const handleCloseModM = () => {setShowMM(false);};
       const onChangeNameModule = (e) => {
         const name = e.target.value;
         setModuleName(name);
@@ -56,7 +69,10 @@ const ShowProject= (props)=>{
         const desc = e.target.value;
         setModuleDesc(desc);
       };
-
+      const onChangeNameClient = (e) => {
+        const client = e.target.value;
+        setCname(client);
+      };
       //nombre
       const onChangeNameReq= (e) => {
         const name = e.target.value;
@@ -83,6 +99,40 @@ const ShowProject= (props)=>{
         }
         ).then( ()=>{window.location.reload();} )
     }
+    const handleAddClient = (e)=>{
+      axios.post("http://localhost:8080/projects/AssignClient",{
+          email: cName,
+          idProject: id
+      }
+      ).then( ()=>{
+        window.location.reload();} )
+  }
+  const handleDeleteModule=(e)=>{
+    e.stopPropagation();
+    let idObj = e.target.dataset;
+    console.log(idObj.test);
+    axios.post("http://localhost:8080/modules/delete",{
+        id:parseInt(idObj.test)
+      }
+  ).then( ()=>{window.location.reload();} )
+  }
+  const handleUpdateModule=(e)=>{
+    console.log(moduleId);
+    axios.post("http://localhost:8080/modules/update",{
+      nameModule:moduleAddName,
+      descriptionModule:moduleAddDesc,
+      idM: moduleId,
+      projectId: id
+    }).then(()=>window.location.reload())
+  }
+  const handleDeleteReq=()=>{
+
+
+  }
+  const handleUpdateReq=()=>{
+
+    
+  }
 return(
     <div>
     <h4>Projecto</h4>
@@ -98,6 +148,46 @@ return(
       </label>{" "}
       {pDescription}
     </div>
+    <div>
+      <label>
+        <strong>Nombre Cliente: </strong>
+      </label>{" "}
+      {cNameGet ? cNameGet.nombre :"no asignado" }
+    </div>
+    <div>
+      <label>
+        <strong>Apellido Cliente: </strong>
+      </label>{" "}
+      {cNameGet? cNameGet.apellido :"no asignado" }
+    </div>
+    <Button variant="primary" onClick={handleShowCli}>Añadir cliente</Button>
+    
+    <Modal show={showC} onHide={handleCloseCli}>
+        <Modal.Header closeButton>
+          <Modal.Title>Añadir Cliente</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Form>
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="name" onChange={onChangeNameClient} />
+            </Form.Group>
+        </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleCloseCli}>
+            Cancelar
+          </Button>
+          <Button variant="primary"  onClick={handleAddClient}>
+            Ingresar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
+
+
+
 
     <Row>
     <Modal show={showR} onHide={handleCloseR}>
@@ -137,7 +227,15 @@ return(
                     {item.nameRequirement}
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
-                <Card.Body>{ item.descriptionRequirement}</Card.Body>
+                <Card.Body>
+                  { item.descriptionRequirement}
+                  <Button variant="secondary"  data-Test={item.id} onClick={handleUpdateReq(item.id)}>
+                    Actualizar
+                  </Button>
+                <Button variant="danger"  data-Test={item.id} onClick={handleDeleteReq(item.id)}>
+                    Eliminar
+                  </Button>
+                </Card.Body>
             </Accordion.Collapse>
     </Accordion>
 
@@ -181,9 +279,41 @@ return(
                     {item.nameModule}
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
-                <Card.Body>{ item.descriptionModule}</Card.Body>
+                <Card.Body>{ item.descriptionModule}
+                <Button variant="secondary"  data-Test={item.id} onClick={handleShowModM}>
+                    Actualizar
+                  </Button>
+                <Button variant="danger" data-Test={item.id} onClick={handleDeleteModule}>
+                    Eliminar
+                  </Button>
+                </Card.Body>
             </Accordion.Collapse>
     </Accordion>
+
+    <Modal show={showMM} onHide={handleCloseModM}>
+        <Modal.Header closeButton>
+          <Modal.Title>Actualizar modulo</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Form.Group controlId="formBasicEmail">
+                <Form.Label>Nombre modulo</Form.Label>
+                <Form.Control type="name" onChange={onChangeNameModule} />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Descripcion</Form.Label>
+                <Form.Control as="textarea" onChange={onChangeNameDesc} />
+            </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModM}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleUpdateModule}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
     </ListGroup.Item> )}
     </ListGroup>

@@ -5,7 +5,6 @@ const { Requirements,modules } = require("../models");
 //Muestra todos los requerimientos que son parte de un Proyecto especifico
 router.get("/allFromProject",async (req,res)=>{
     try {
-        console.log(req.query.projectId);
         const requirements= await Requirements.findAll({
             where: {
                 projectId: req.query.projectId

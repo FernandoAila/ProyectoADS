@@ -1,6 +1,6 @@
 const express = require("express");
 const router = require("express").Router();
-const { Projects,Modules,Requirements,Clients_Projects } = require("../models");
+const { Projects,Users,Requirements,Clients_Projects } = require("../models");
 const { Op } = require("sequelize");
 
 //Muestra todos los proyectos disponibles
@@ -54,11 +54,26 @@ router.post("/create",async (req,res)=>{
 //Muestra solo el proyecto
 router.get("/:id",async (req,res)=>{
     try {
-        const projects = await Projects.findOne({
+        let projects = await Projects.findOne({
             where: {
                 id: req.params.id
             },
           });
+          const project_asig= await Clients_Projects.findOne({
+              where:{
+                projectId: req.params.id,
+              }
+          }).catch((err)=>console.log(err));
+          if(!project_asig){
+            return res.send(projects);
+          }
+          const user = await Users.findOne({
+              where:{
+                    id:project_asig.clientId
+              }
+          })
+          projects.dataValues.client = user;
+          console.log(projects);
         return res.send(projects);
     } catch (err) {
         return res.status(400).send(err);
@@ -67,18 +82,23 @@ router.get("/:id",async (req,res)=>{
 
 router.post("/AssignClient",async (req,res)=>{
     try {
+        console.log("TEST");
         //Revisa si un proyecto con el mismo nombre ya está asignado
-        console.log(req.body);
         const projectValid = await Clients_Projects.findOne({
             where: {
                 projectId: req.body.idProject,
             },
-          });
+          }).catch((err)=>console.log(err));
         if(projectValid) return res.status(400).send("Ya está asignado este proyecto");
-
+        console.log(req.body.email);
+        const user = await Users.findOne({
+            where:{
+                email:req.body.email
+            }
+        });
         const client_project = await Clients_Projects.create({
             projectId:req.body.idProject,
-            clientId:req.body.idClient,
+            clientId:user.id,
         }).catch((err)=>console.log(err));
 
         return res.status(200).send(client_project);
