@@ -167,4 +167,39 @@ router.get("/AllUnasigned",async (req,res)=>{
     }
 });
 
+//Asignar desarrollador
+router.post("/ReAssignDeveloper",async (req,res)=>{
+    try {
+        console.log(req.body);
+
+        //encuentra al modulo a reasignar dado el nombre
+        const module = await Modules.findOne({
+            where: {
+                nameModule: req.body.idModule,
+            },
+        });
+
+        //encuentra al usuario nuevo dado el nombre
+        const user = await Users.findOne({
+            where: {
+                name: req.body.developerName,
+                apellido: developerLastName 
+            },
+        });
+
+        //Marca el modulo como asignado
+        const moduleAssig = await Developers_Modules.update({
+            developerId:user.Id,
+            where:{
+                moduleId:module.Id
+            }
+        }).catch((err)=>console.log(err));
+
+        return res.status(200).send({developer_modules,moduleAssig});
+    } 
+    catch (error) {
+        return res.status(400).send("Hubo un error al re-asignar el modulo");    
+    }
+});
+
 module.exports = router;

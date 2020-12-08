@@ -1,4 +1,7 @@
 'use strict';
+
+// Modelo de modulos asignados
+
 const {
   Model
 } = require('sequelize');
