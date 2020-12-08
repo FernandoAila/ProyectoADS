@@ -1,4 +1,7 @@
 'use strict';
+
+// Modelo de postulacion de freelancers a los modulos
+
 const {
   Model
 } = require('sequelize');
