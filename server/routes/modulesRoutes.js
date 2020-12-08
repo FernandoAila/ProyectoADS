@@ -155,7 +155,7 @@ router.post("/Apply",async (req,res)=>{
 router.get("/AllUnasigned",async (req,res)=>{
     try {
         console.log("hohoo");
-        //Busca todos los modelos no asignados dado un proyecto
+        //Busca todos los modulos no asignados dado un proyecto
         const modules= await Modules.findAll({
             where: {
                 assigned: false
@@ -167,7 +167,34 @@ router.get("/AllUnasigned",async (req,res)=>{
     }
 });
 
-//Asignar desarrollador
+//Devuelve modulos asignados al desarrollador
+router.get("/AllDevAsssigned",async (req,res)=>{
+    try {
+        console.log("hohoo");
+        //Busca todos los modulos asignados dado un proyecto
+        const arrayModules= await Developers_Modules.findAll({
+            where: {
+                developerId: req.body.developerId
+            }
+        });
+
+        //crea arreglo de modulos para devolver
+        var arrDevModu = [];
+        //revisa en la tabla modulos los modulos asignados al desarrollador
+        for (const mod of arrayModules) {
+            var module = await Modules.findOne({
+                id:mod.id
+            });
+        //agrega el modeulo encontrado al arreglo a devolver
+        arrDevModu.push(module);
+        }
+        return res.send(arrDevModu);
+    } catch (err) {
+        return res.status(400).send(err);
+    }
+});
+
+//ReAsignar desarrollador
 router.post("/ReAssignDeveloper",async (req,res)=>{
     try {
         console.log(req.body);
