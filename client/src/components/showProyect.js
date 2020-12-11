@@ -122,7 +122,6 @@ const ShowProject= (props)=>{
       nameModule:moduleAddName,
       descriptionModule:moduleAddDesc,
       idM: moduleId,
-      projectId: id
     }).then(()=>window.location.reload())
   }
   const handleDeleteReq=()=>{

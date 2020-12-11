@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Developers_Modules',
+    timestamps: false,
   });
   return Developers_Modules;
 };

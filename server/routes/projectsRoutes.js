@@ -7,7 +7,6 @@ const { Op } = require("sequelize");
 router.get("/all",async (req,res)=>{
     try {
         const {title,page,size} = req.query;
-        console.log(req.query.title);
         var condition = title ? { nameProject: { [Op.like]: `%${title}%` } } : null;
         const { limit, offset } = getPagination(page, size);
         Projects.findAndCountAll({ where: condition, limit, offset })
@@ -23,7 +22,6 @@ router.get("/all",async (req,res)=>{
 router.post("/create",async (req,res)=>{
     try {
         //Revisa si un proyecto con el mismo nombre existe
-        console.log(req.body);
         const projectValid = await Projects.findOne({
             where: {
                 nameProject: req.body.nameProject,
@@ -36,9 +34,7 @@ router.post("/create",async (req,res)=>{
             descriptionProject:req.body.descriptionProject,
         }).catch((err)=>console.log(err));
         const arrayReq= req.body.requeriments;
-        console.log(arrayReq);
         for (const requi of arrayReq) {
-            console.log(requi);
             await Requirements.create({
                 nameRequirement:requi.name,
                 descriptionRequirement:requi.desc,
@@ -73,7 +69,6 @@ router.get("/:id",async (req,res)=>{
               }
           })
           projects.dataValues.client = user;
-          console.log(projects);
         return res.send(projects);
     } catch (err) {
         return res.status(400).send(err);
@@ -82,7 +77,6 @@ router.get("/:id",async (req,res)=>{
 
 router.post("/AssignClient",async (req,res)=>{
     try {
-        console.log("TEST");
         //Revisa si un proyecto con el mismo nombre ya está asignado
         const projectValid = await Clients_Projects.findOne({
             where: {
@@ -90,7 +84,6 @@ router.post("/AssignClient",async (req,res)=>{
             },
           }).catch((err)=>console.log(err));
         if(projectValid) return res.status(400).send("Ya está asignado este proyecto");
-        console.log(req.body.email);
         const user = await Users.findOne({
             where:{
                 email:req.body.email

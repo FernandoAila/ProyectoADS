@@ -77,23 +77,26 @@ router.post("/passUpdate",async (req,res)=>{
 router.get("/AllInterns",async (req,res)=>{
   try {
       //Busca todos los desarrolladores en la tabla users_rols
-      const internsId = await Users_Rols.findAll({
+      const internsId = await users_rols.findAll({
           where: {
             rolsId: 3
-          }
+          },
+          raw : true,
       });
-      var arrIntern;
+      console.log(internsId);
+      let arrIntern=[];
       //Busca todos los usuarios que sea desarrolladores internos
       for(const internsRols of internsId){
-        console.log(interns)
+        console.log(internsRols.userId)
         const intern = await Users.findOne({
           where: {
             id: internsRols.userId
-          }
-        });
-        arrIntern.push({intern})
+          },
+          raw : true,
+        }).catch((err)=>console.log(err))
+        arrIntern.push(intern)
       }
-
+      console.log(arrIntern);
       return res.send(arrIntern);
   } catch (err) {
       return res.status(400).send(err);
@@ -101,7 +104,7 @@ router.get("/AllInterns",async (req,res)=>{
 });
 
 //Devuelve a los Freelance que postulador a un modulo dado
-router.get("/AllInterns",async (req,res)=>{
+router.get("/AllFree",async (req,res)=>{
   try {
       //Busca todos los desarrolladores en la tabla users_rols
       const internsId = await Users_Rols.findAll({

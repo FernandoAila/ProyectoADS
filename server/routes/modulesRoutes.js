@@ -1,6 +1,6 @@
 const express = require("express");
 const router = require("express").Router();
-const { Modules,Requirements,Requirements_Modules,Developers_Modules} = require("../models");
+const { Modules,Requirements,Users,Requirements_Modules,Developers_Modules} = require("../models");
 
 //Muestra todos los modulos que son parte de un Proyecto especifico, ademas de sus requerimientos asociados
 router.get("/allFromProject",async (req,res)=>{
@@ -27,6 +27,7 @@ router.get("/allFromProject",async (req,res)=>{
 //Crea un modulo
 router.post("/create",async (req,res)=>{
     try {
+        console.log(req.body);
         //Revisa si un modulo con el mismo nombre existe
         const moduleValid = await Modules.findOne({
             where: {
@@ -39,9 +40,10 @@ router.post("/create",async (req,res)=>{
         const module = await Modules.create({
             nameModule:req.body.moduleName,
             descriptionModule:req.body.descriptionModule,
-            projectId: req.body.idProject,
+            projectId: req.body.projectId,
             assigned: false
-        }).then( (data) =>{return res.status(200).send(module )} )
+        });
+        return res.status(200).send(module)
     } 
     catch (error) {
         return res.status(400).send("Hubo un error al crear el modulo");    
@@ -75,44 +77,39 @@ router.post("/AssignDeveloper",async (req,res)=>{
     try {
         console.log(req.body);
 
-        //encuentra al modulo dado el nombre
+        //encuentra al modulo dado el id
         const module = await Modules.findOne({
             where: {
-                nameModule: req.body.idModule,
+                id: req.body.idModule,
             },
         });
-
-        //encuentra al usuario dado el nombre
+        //encuentra al usuario dado el id
         const user = await Users.findOne({
             where: {
-                name: req.body.developerName,
-                apellido: developerLastName 
+                id: req.body.id,
             },
         });
-
         //revisa si ya está asignado
         const moduleValid = await Developers_Modules.findOne({
             where: {
-                moduleId: module.Id,
+                moduleId: req.body.idModule,
             },
           });
         if(moduleValid) return res.status(400).send("Ya está asignado este modulo");
-
         //lo crea en la tabla de asignacion
         const developer_modules = await Developers_Modules.create({
-            developerId:user.id,
-            moduleId:module.Id,
+            developerId:req.body.id,
+            moduleId:req.body.idModule,
         }).catch((err)=>console.log(err));
-
         //Marca el modulo como asignado
-        const moduleAssig = await Modules.update({
-            assigned:true,
+        await Modules.update({
+            assigned: true},{
             where:{
-                moduleId:module.Id
+                id:req.body.idModule
             }
-        }).catch((err)=>console.log(err));
-
-        return res.status(200).send({developer_modules,moduleAssig});
+        }
+    );
+        return res.status(200).send("ok");
     } 
     catch (error) {
         return res.status(400).send("Hubo un error al asignar el modulo");    
@@ -165,6 +162,27 @@ router.get("/AllUnasigned",async (req,res)=>{
     } catch (err) {
         return res.status(400).send(err);
     }
+});
+//Dado un id de modulo devuelve el desarrollador asociado a el
+router.get("/modulesDeveloper",async(req,res)=>{
+    try{
+        const asig = await Developers_Modules.findOne({
+            where: {
+                moduleId: req.query.idModule,
+            },
+        });
+        if(!asig){
+            return res.status(200).send("no se encontro asignacion")
+        }
+        const user = await Users.findOne({
+            where: {
+                id:asig.developerId,
+            },
+        });
+        return res.status(200).send({name:user.nombre,apellido:user.apellido,id:user.id});
+    } catch(err){
+        return res.status(400).send(err);
+    }  
 });
 
 //Devuelve modulos asignados al desarrollador

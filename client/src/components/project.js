@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Container, Tabs, Tab,OverlayTrigger,Tooltip, DropdownButton, ListGroup, Accordion, Card, FormControl, Form, Button, Row, Col, Table, Modal, InputGroup } from "react-bootstrap";
+import React, { useState,  useEffect } from "react";
+import { Container, Tabs, Tab,OverlayTrigger,Tooltip, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import { Redirect, useParams } from 'react-router-dom';
 import ModulosList from "./partes_proyecto/modulos";
@@ -10,7 +10,33 @@ const MostrarProyecto = () => {
     const [projectDesc,setProjectDesc]=useState("");
     const [modules,setModules]=useState([]);
     const [people,setPeople]=useState([]);
+    const[requirements,setRequirements]=useState([]);
+    let { id } = useParams();
+    useEffect(() => {
+        axios.get("http://localhost:8080/projects/"+id
+        ).then(response => {
+          setProjectDesc(response.data.descriptionProject);
+          setProjectName(response.data.nameProject);
+          axios.get("http://localhost:8080/requirements/allFromProject",
+          {
+              params:{
+                  projectId:id
+              }
+        }).then(response => {
+            setRequirements(response.data);
+        });
+         
 
+        axios.get("http://localhost:8080/modules/allFromProject",
+        {
+            params:{
+                projectId:id
+            }
+      }).then(response => {
+          setModules(response.data);
+      });
+        });
+      }, []);
 
 
     return (
@@ -18,8 +44,8 @@ const MostrarProyecto = () => {
             <Row className="justify-content-center">
                 <Col lg={11} xl={10}>
                     <div className="page-header">
-                        <h1>Test</h1>
-                        <p className="lead">Descripcion</p>
+                        <h1>{projectName}</h1>
+                        <p className="lead">{projectDesc}</p>
                         <div className="d-flex align-items-center">
                             <ul className="avatars">
                                 <li>
@@ -31,17 +57,14 @@ const MostrarProyecto = () => {
                                     </a>
                                 </li>
                             </ul>
-                            <Button variant="round flex-shrink-0" data-target="#user-manage-modal">
-                                <i className="material-icons">add</i>
-                            </Button>
                         </div>
                     </div>
                     <Tabs defaultActiveKey="modulos" fill>
                         <Tab eventKey="modulos" title="Modulos">
-                            <ModulosList />
+                            <ModulosList modules={modules} projectId={id} />
                         </Tab>
                         <Tab eventKey="Requerimientos" title="Requerimientos">
-                            <p>test2</p>
+                            <p>TODO</p>
                         </Tab>
                     </Tabs>
                 </Col>

@@ -38,7 +38,7 @@ function App() {
         <Navb/>
         <ShowProject/>
       </Route>
-      <Route path="/test"> 
+      <Route path="/test/:id"> 
         <Navb/>
         <MostrarProyecto/>
       </Route>

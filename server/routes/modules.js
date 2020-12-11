@@ -39,7 +39,6 @@ router.post("/create",async (req,res)=>{
 });
 router.post("/delete",async (req,res)=>{
     try {
-        console.log(req.body.id);
          await Modules.destroy({
             where: {
               id: req.body.id
@@ -52,7 +51,7 @@ router.post("/delete",async (req,res)=>{
 });
 router.post("/update",async (req,res)=>{
     try {
-        console.log(req.body.nameModule,req.body.descriptionModule,req.body.idM,req.body.projectId);
+        console.log(req.body.nameModule,req.body.descriptionModule,req.body.idM);
         await  Modules.update(
             {
             nameModule:req.body.nameModule,
