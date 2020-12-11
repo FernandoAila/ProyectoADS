@@ -1,5 +1,5 @@
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 import {Button,Form} from 'react-bootstrap';
 import { useState } from 'react';
 import axios from "axios";
@@ -11,6 +11,7 @@ import Register from "./components/register.js"
 import ListsProjects from "./components/listsProjects.js"
 import AddProyect from "./components/add_proyect.js"
 import  ShowProject   from "./components/showProyect.js";
+import  MostrarProyecto   from "./components/project.js";
 import NoCotizadosModulos from "./components/modulos_no_cotizados.js";
 import{BrowserRouter as Router, Switch,Route,Link}from 'react-router-dom';
 
@@ -36,6 +37,10 @@ function App() {
       <Route path="/projects/:id">
         <Navb/>
         <ShowProject/>
+      </Route>
+      <Route path="/test"> 
+        <Navb/>
+        <MostrarProyecto/>
       </Route>
       <Route path="/projects">
         <Navb/>

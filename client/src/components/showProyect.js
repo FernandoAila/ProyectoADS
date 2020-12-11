@@ -9,7 +9,7 @@ const ShowProject= (props)=>{
     const [moduleAddName,setModuleName]=useState("");
     const [moduleAddDesc,setModuleDesc]=useState("");
     const [reqAddName,setReqName]=useState("");
-    const [reqAddDesc,setReqDesc]=useState("")
+    const [reqAddDesc,setReqDesc]=useState("");
     const [modules, setModules]=useState([]);
     const [moduleId, setModuleId]=useState([]);
     const [pName,setPname]=useState("");
