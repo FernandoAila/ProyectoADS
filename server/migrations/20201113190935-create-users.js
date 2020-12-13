@@ -14,6 +14,12 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
+      firstTime: {
+        type: Sequelize.BOOLEAN
+      },
+      profilePic: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
