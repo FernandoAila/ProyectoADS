@@ -4,8 +4,16 @@ import AddModulo from "./add_modulo.js";
 import Modulo from "./modulo.js";
 const ModulosList = (props) => {
     const [show, setShow] = useState(false);
+    const [search,setSearch]=useState("");
     const handleShow = () => setShow(true);
     const handleClose= ()=> setShow(false);
+    const onChangeSearch = (e) => {
+        const searchname = e.target.value;
+        setSearch(searchname);
+      };
+    const filterResult= props.modules.filter( modulo=>{
+        return modulo.nameModule.toLowerCase().includes(search.toLowerCase())
+    })
     return (
         <Fragment>
             <Modal show={show} onHide={handleClose}>
@@ -29,7 +37,7 @@ const ModulosList = (props) => {
                                 <i className="material-icons">filter_list</i>
                             </InputGroup.Text>
                         </InputGroup.Prepend>
-                        <Form.Control className="filter-list-input" type="search" placeholder="Filtrar Modulos" />
+                        <Form.Control onChange={onChangeSearch} className="filter-list-input" type="search" placeholder="Filtrar Modulos" />
                     </InputGroup>
                 </Col>
 
@@ -40,7 +48,7 @@ const ModulosList = (props) => {
                         <h6>Modulos Activos</h6>
                     </div>
                     <div className="card-list-body">
-                        {props.modules.map( (item)=> <Modulo key={item.id} data={item}/>)}
+                        {filterResult.map( (item)=> <Modulo key={item.id} data={item}/>)}
                     </div>
                 </div>
             </div>

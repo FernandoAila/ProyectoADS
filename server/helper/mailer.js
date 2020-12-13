@@ -21,4 +21,17 @@ const mailer = (user,pass) => {
   `;
   return { from, to, subject, html };
 };
-module.exports={transporter,mailer};
+const asignation=(user,module)=>{
+  const from = "email@plataforma.com";
+  const to = user.email;
+  const subject = "Asignacion de modulo";
+  const html = `
+  Saludos
+  ${user.nombre}!, has sido asignado al modulo ${module.nameModule}.\n
+  ${module.nameModule}:\n
+  ${module.descriptionModule}\n
+  Atentamente el equipo de NOMBRE_PLATAFORMA.
+  `;
+  return { from, to, subject, html };
+}
+module.exports={transporter,mailer,asignation};

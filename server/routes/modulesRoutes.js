@@ -1,4 +1,5 @@
 const express = require("express");
+const { transporter,asignation } = require("../helper/mailer");
 const router = require("express").Router();
 const { Modules,Requirements,Users,Requirements_Modules,Developers_Modules} = require("../models");
 
@@ -75,7 +76,6 @@ router.post("/addRequirement",async (req,res)=>{
 //Asignar desarrollador
 router.post("/AssignDeveloper",async (req,res)=>{
     try {
-        console.log(req.body);
 
         //encuentra al modulo dado el id
         const module = await Modules.findOne({
@@ -109,7 +109,17 @@ router.post("/AssignDeveloper",async (req,res)=>{
             }
         }
     );
-        return res.status(200).send("ok");
+    const sendEmail = () => {
+        transporter.sendMail(asignation(user,module), (err, info) => {
+            if (err) {
+              console.log(err);
+              return res.status(400).send(err);
+            }
+            console.log(`** Email enviado**`, info.response)
+          })
+        };
+    sendEmail();
+    return res.status(200).send("ok");
     } 
     catch (error) {
         return res.status(400).send("Hubo un error al asignar el modulo");    
@@ -189,24 +199,27 @@ router.get("/modulesDeveloper",async(req,res)=>{
 router.get("/AllDevAsssigned",async (req,res)=>{
     try {
         console.log("hohoo");
-        //Busca todos los modulos asignados dado un proyecto
+        //Busca todos los modulos asignados a un desarrollador
         const arrayModules= await Developers_Modules.findAll({
             where: {
-                developerId: req.body.developerId
-            }
+                developerId: req.query.id
+            },
+            raw : true,
         });
-
+        console.log(arrayModules);
         //crea arreglo de modulos para devolver
-        var arrDevModu = [];
+        let arrDevModu = [];
         //revisa en la tabla modulos los modulos asignados al desarrollador
         for (const mod of arrayModules) {
-            var module = await Modules.findOne({
-                id:mod.id
+            let module = await Modules.findOne({
+                where: {
+                    id:mod.moduleId,
+                },
             });
         //agrega el modeulo encontrado al arreglo a devolver
         arrDevModu.push(module);
         }
-        return res.send(arrDevModu);
+        return res.status(200).send(arrDevModu);
     } catch (err) {
         return res.status(400).send(err);
     }
@@ -215,32 +228,40 @@ router.get("/AllDevAsssigned",async (req,res)=>{
 //ReAsignar desarrollador
 router.post("/ReAssignDeveloper",async (req,res)=>{
     try {
-        console.log(req.body);
 
         //encuentra al modulo a reasignar dado el nombre
         const module = await Modules.findOne({
             where: {
-                nameModule: req.body.idModule,
+                id: req.body.idModule,
             },
         });
 
-        //encuentra al usuario nuevo dado el nombre
+        //encuentra al usuario nuevo dado el id
         const user = await Users.findOne({
             where: {
-                name: req.body.developerName,
-                apellido: developerLastName 
+                id: req.body.id,
             },
         });
 
         //Marca el modulo como asignado
         const moduleAssig = await Developers_Modules.update({
-            developerId:user.Id,
+            developerId:req.body.id},{
             where:{
-                moduleId:module.Id
-            }
-        }).catch((err)=>console.log(err));
-
-        return res.status(200).send({developer_modules,moduleAssig});
+                moduleId:req.body.idModule
+            }}).catch((err)=>console.log(err));
+        
+        const sendEmail = () => {
+            transporter.sendMail(asignation(user,module), (err, info) => {
+                if (err) {
+                      console.log(err);
+                      return res.status(400).send(err);
+                }
+                console.log(`** Email enviado**`, info.response)
+                }
+            )
+        };
+        sendEmail();
+        return res.status(200).send("ok");
     } 
     catch (error) {
         return res.status(400).send("Hubo un error al re-asignar el modulo");    

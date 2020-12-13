@@ -13,6 +13,7 @@ import AddProyect from "./components/add_proyect.js"
 import  ShowProject   from "./components/showProyect.js";
 import  MostrarProyecto   from "./components/project.js";
 import NoCotizadosModulos from "./components/modulos_no_cotizados.js";
+import UserPage from "./components/user_page.js";
 import{BrowserRouter as Router, Switch,Route,Link}from 'react-router-dom';
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
         <Navb/>
         <Perfil/>
       </Route>
+      <Route path="/user/:id">
+        <Navb/>
+        <UserPage/>
+      </Route>
       <Route path="/register">
         <Navb/>
         <Register/>
@@ -36,7 +41,7 @@ function App() {
       </Route>
       <Route path="/projects/:id">
         <Navb/>
-        <ShowProject/>
+        <MostrarProyecto/>
       </Route>
       <Route path="/test/:id"> 
         <Navb/>

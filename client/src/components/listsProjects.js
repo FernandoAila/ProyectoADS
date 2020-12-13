@@ -2,7 +2,6 @@ import React, { useState, useRef,useEffect} from "react";
 import { login} from "../Redux/actions/auth";
 import {Button,FormControl,ListGroup,Col,InputGroup,Row,Modal,Form} from "react-bootstrap"
 import { useSelector, useDispatch} from "react-redux";
-import Project from "./projects";
 import Pagination from "@material-ui/lab/Pagination";
 import axios from "axios";
 import { Link } from "react-router-dom";

@@ -18,7 +18,19 @@ router.get("/profile",async (req,res)=>{
         return res.status(400).send(err);
     }
 });
-
+//Recoge datps de un usuario dado ID
+router.get("/profileinfo",async (req,res)=>{
+  try {
+      const user = await Users.findOne({
+        where: {
+            id: req.query.id,
+        },
+    });
+      return res.send({email:user.email,nombre:user.nombre,apellido:user.apellido,telefono:user.telefono});
+  } catch (err) {
+      return res.status(400).send(err);
+  }
+});
 router.post("/modify",async (req,res)=>{
     try {
       let data=jwt.verify(req.body.token, process.env.SECRET_TOKEN);

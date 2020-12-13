@@ -281,3 +281,21 @@ h3 + .btn-round, h5 + .btn-round {
 .nolinebreak{
   white-space:nowrap;
 }
+
+.media {
+    display: flex;
+    align-items: flex-start;
+}
+.media-body {
+  flex: 1;
+}
+.ml-3, .mx-3 {
+  margin-left: 1.5rem !important;
+}
+.namePerfil{
+  font-size: 2rem;
+  margin-bottom: 0 !important;
+}
+.tituloPerfil{
+  font-size: 1.5rem;
+}

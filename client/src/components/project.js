@@ -1,5 +1,5 @@
 import React, { useState,  useEffect } from "react";
-import { Container, Tabs, Tab,OverlayTrigger,Tooltip, Button, Row, Col } from "react-bootstrap";
+import { Container, Tabs, Tab,OverlayTrigger,Tooltip, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import { Redirect, useParams } from 'react-router-dom';
 import ModulosList from "./partes_proyecto/modulos";

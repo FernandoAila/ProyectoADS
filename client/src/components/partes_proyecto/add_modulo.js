@@ -6,11 +6,13 @@ const AddModulo = (props) => {
     const [nombre, setNombre] = useState("");
     const [descripcion, setDesc] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
     const [asign, setAsign] = useState("");
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
     }
+    const filterResult=interns.filter( intern=>{
+        return intern.nombre.toLowerCase().includes(searchTerm.toLowerCase()) || intern.apellido.toLowerCase().includes(searchTerm.toLowerCase())
+    })
     const handleChangeNombre=(e)=>{
         setNombre(e.target.value)
     }
@@ -25,7 +27,7 @@ const AddModulo = (props) => {
         })
     }, []);
     const handleSubmit = (e) => {
-        console.log(props.projectId);
+        console.log("Test");
         axios.post("http://localhost:8080/modulesRoutes/create", {
             moduleName: nombre,
             descriptionModule: descripcion,
@@ -44,9 +46,6 @@ const AddModulo = (props) => {
 
         }
         )
-    }
-    const validateAdd = () => {
-        return nombre.length > 0 && descripcion.length;
     }
     return (
         <Fragment>
@@ -89,7 +88,7 @@ const AddModulo = (props) => {
                         <Form.Group className="users">
 
 
-                            {interns.map((item) =>
+                            {filterResult.map((item) =>
                                 <div key={item.id} className="custom-control custom-checkbox">
                                     <span className="d-flex align-items-center">
                                         <img alt={item.nombre + " " + item.apellido} src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" className="avatar mr-2"></img>
@@ -103,7 +102,7 @@ const AddModulo = (props) => {
                 </Tabs>
             </Modal.Body>
             <Modal.Footer>
-                <Button disabled={!validateAdd} variant="primary" onClick={handleSubmit}>
+                <Button   onClick={handleSubmit} disabled={nombre.length ===0||descripcion.length ===0} variant="primary">
                     Guardar
                     </Button>
             </Modal.Footer>
