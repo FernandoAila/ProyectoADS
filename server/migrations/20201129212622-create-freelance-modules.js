@@ -10,6 +10,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         foreignKey: true
       },
+      monto: {
+        type: Sequelize.INTEGER
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {

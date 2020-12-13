@@ -20,6 +20,8 @@ module.exports = {
       password: hashPass,
       createdAt: new Date(),
       updatedAt: new Date(),
+      profilePic: null,
+      firstTime: false,
       nombre: 'admin',
       apellido: 'admin',
       telefono: '000000000'
