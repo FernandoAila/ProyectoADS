@@ -1,4 +1,7 @@
 const nodemailer = require("nodemailer");
+var schedule = require('node-schedule');
+
+
 //Configuracion del node mailer
 const transporter = nodemailer.createTransport({
     host: "smtp.mailtrap.io",
@@ -34,4 +37,31 @@ const asignation=(user,module)=>{
   `;
   return { from, to, subject, html };
 }
+
+//Texto por defecto al enviar el email.
+const reunion = (user,pass) => {
+  const from = "email@platamforma.com";
+  const to = user.email;
+  const subject = "Recordatorio Reunion NOMBRE_PLATAFORMA";
+  const html = `
+  Saludos
+  ${user.nombre}!, Se le recuerda que tiene una reunion agendada para el dia ${reunion.fecha} a las ${hora}.
+  `;
+  return { from, to, subject, html };
+};
+
+schedule.schedule('0 7 * * *', () => { //configurado para que mande mail todos los dias a las 7:00 AM
+  // Send e-mail 
+
+
+
+  transporter.sendMail(reunion(user,fecha,hora), function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+    });
+  });
+
 module.exports={transporter,mailer,asignation};
