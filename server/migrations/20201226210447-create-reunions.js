@@ -9,7 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       Date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
+      },
+      Hour: {
+        type: Sequelize.INTEGER
+      },
+      Minute: {
+        type: Sequelize.INTEGER
       },
       IdJefe: {
         type: Sequelize.INTEGER,

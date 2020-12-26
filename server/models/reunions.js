@@ -14,8 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Reunions.init({
-    Date: DataTypes.DATE,
-    IdJefe: DataTypes.INTEGER
+    Date: DataTypes.DATEONLY,
+    IdJefe: DataTypes.INTEGER,
+    Hour: DataTypes.INTEGER,
+    Minute: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Reunions',
