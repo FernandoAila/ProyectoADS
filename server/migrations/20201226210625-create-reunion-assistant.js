@@ -1,21 +1,18 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Freelance_Modules', {
-      developerId: {
+    await queryInterface.createTable('Reunion_Assistants', {
+      IdReu: {
         type: Sequelize.INTEGER,
         foreignKey: true
       },
-      moduleId: {
+      IdUser: {
         type: Sequelize.INTEGER,
         foreignKey: true
-      },
-      price: {
-        type: Sequelize.INTEGER
       }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Freelance_Modules');
+    await queryInterface.dropTable('Reunion_Assistants');
   }
 };
