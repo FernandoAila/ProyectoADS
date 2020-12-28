@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 var schedule = require('node-schedule');
+const { Users,Reunions,Reunion_Assistants} = require("../models");
 
 
 //Configuracion del node mailer
