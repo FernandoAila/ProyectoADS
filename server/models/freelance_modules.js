@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
   };
   Freelance_Modules.init({
     developerId: DataTypes.INTEGER,
-    moduleId: DataTypes.INTEGER
+    moduleId: DataTypes.INTEGER,
+    price: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Freelance_Modules',
