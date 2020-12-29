@@ -5,12 +5,12 @@ const { Users,Reunions,Reunion_Assistants} = require("../models");
 
 //Configuracion del node mailer
 const transporter = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-      user: "23fc7d3cc6d871",
-      pass:"6d8bcd1427befb",
-    }
+  host: "smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "23fc7d3cc6d871",
+    pass:"6d8bcd1427befb",
+  }
 });
 
 //Texto por defecto al enviar el email.
@@ -72,14 +72,14 @@ var j = schedule.scheduleJob('* * * * *', async function(){ //configurado para q
     for (const reu of arrReunions) {
       const arrDevReu = await Reunion_Assistants.findAll({
         where: {
-          idReu: reu.id
+          IdReu: reu.id
         },
       });
       //por cada ciatado a la reunion
       for (const dev of arrDevReu){
         var user = await Users.findOne({
           where: {
-            idUser: dev.id
+            id: dev.IdUser
           },
         });
         //envia el mail al desarrollador correspondiente

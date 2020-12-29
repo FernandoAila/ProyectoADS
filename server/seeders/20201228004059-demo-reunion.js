@@ -1,9 +1,12 @@
 'use strict';
+var DateComp = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
+DateComp.setDate(DateComp.getDate() + 3);
 
 module.exports = {
+  
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Reunions', [{
-      Date: new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()),
+      Date: DateComp,
       Hour: 10,
       Minute: 0,
       IdJefe: 1,
