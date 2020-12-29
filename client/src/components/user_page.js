@@ -40,7 +40,7 @@ const UserPage = () => {
                 <Col lg={11} xl={10}>
                     <div className="page-header mb-4">
                         <div className="media">
-                            <Image alt="Image" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" className="avatar avatar-lg mt-1">
+                            <Image alt="Image" src={user.profilePic} className="avatar avatar-lg mt-1">
                             </Image>
                             <div class="media-body ml-3">
                                 <h1 class="namePerfil">{user.nombre+" "+user.apellido}</h1>

@@ -25,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     nombre:DataTypes.STRING,
     apellido:DataTypes.STRING,
     telefono:DataTypes.STRING,
+    firstTime:{type:DataTypes.BOOLEAN,defaultValue:true},
+    profilePic:{type:DataTypes.STRING,defaultValue:"//ssl.gstatic.com/accounts/ui/avatar_2x.png"}
   }, {
     sequelize,
     modelName: 'Users',

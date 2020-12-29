@@ -15,8 +15,8 @@ module.exports = {
         password: hashPass,
         createdAt: new Date(),
         updatedAt: new Date(),
-        profilePic: null,
-        firstTime: true,
+        profilePic: "//ssl.gstatic.com/accounts/ui/avatar_2x.png",
+        firstTime: false,
         nombre: all_devsNames[dev],
         apellido: all_devsNames[dev],
         telefono: '000000000'

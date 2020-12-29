@@ -15,10 +15,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       firstTime: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
       profilePic: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING,
+        defaultValue: "//ssl.gstatic.com/accounts/ui/avatar_2x.png"
       },
       createdAt: {
         allowNull: false,

@@ -15,7 +15,7 @@ const Modulo = (props) => {
                             <li>
                                     <OverlayTrigger overlay={<Tooltip id="button-tooltip-2">{props.datadev.nombre+" "+props.datadev.apellido}</Tooltip>}>
                                         <img alt={props.datadev.nombre+" "+props.datadev.apellido} className="avatar"
-                                            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"></img>
+                                            src={props.datadev.profilePic}></img>
                                     </OverlayTrigger>
                             </li>
                         </ul>

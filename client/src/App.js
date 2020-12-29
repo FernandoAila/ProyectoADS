@@ -10,10 +10,10 @@ import Index from "./components/index.js"
 import Register from "./components/register.js"
 import ListsProjects from "./components/listsProjects.js"
 import AddProyect from "./components/add_proyect.js"
-import  ShowProject   from "./components/showProyect.js";
 import  MostrarProyecto   from "./components/project.js";
 import NoCotizadosModulos from "./components/modulos_no_cotizados.js";
 import UserPage from "./components/user_page.js";
+import RecoverPass from "./components/recoverPass.js";
 import{BrowserRouter as Router, Switch,Route,Link}from 'react-router-dom';
 
 function App() {
@@ -43,10 +43,6 @@ function App() {
         <Navb/>
         <MostrarProyecto/>
       </Route>
-      <Route path="/test/:id"> 
-        <Navb/>
-        <MostrarProyecto/>
-      </Route>
       <Route path="/projects">
         <Navb/>
         <ListsProjects/>
@@ -54,6 +50,9 @@ function App() {
       <Route path="/modules">
         <Navb/>
         <NoCotizadosModulos/>
+      </Route>
+      <Route path="/recover_pass/:id/:token">
+        <RecoverPass/>
       </Route>
       <Route path="/">
         <Index/>

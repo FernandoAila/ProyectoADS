@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser= require("body-parser");
 const cors = require('cors');
 require("dotenv").config();
-
+global.__basedir = __dirname;
 const app = express();
 
 app.use(cors());
@@ -21,6 +21,7 @@ app.use("/modules",require("./routes/modules"));
 app.use("/projects",require("./routes/projectsRoutes"));
 app.use("/modulesRoutes",require("./routes/modulesRoutes"));
 app.use("/requirements",require("./routes/requirementsRoutes"));
+app.use('/images', express.static('images'))
 const PUERTO= process.env.PORT||8080;
 app.listen(
   PUERTO,()=>
