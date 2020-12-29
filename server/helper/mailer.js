@@ -49,7 +49,7 @@ const reunion = (user,reu) => {
   const subject = "Recordatorio Reunion NOMBRE_PLATAFORMA";
   const html = `
   Saludos
-  ${user.nombre}!, Se le recuerda que tiene una reunion agendada para el dia ${reu.date} a las ${reu.hour}:${reu.minute}.
+  ${user.nombre}!, Se le recuerda que tiene una reunion agendada para el dia ${reu.Date} a las ${reu.Hour}:${reu.Minute}.
   `;
   return { from, to, subject, html };
 };
