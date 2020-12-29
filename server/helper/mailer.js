@@ -51,37 +51,43 @@ const reunion = (user,reu) => {
   return { from, to, subject, html };
 };
 
-schedule.schedule('0 7 * * *', () => { //configurado para que mande mail todos los dias a las 7:00 AM
+var j = schedule.scheduleJob('* * * * *', async function(){ //configurado para que mande mail todos los dias a las 7:00 AM
 
+  console.log("entra al schedule");
+  var DateComp = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
+  DateComp.setDate(DateComp.getDate() + 3);
+  
   //Revisa si existen reuniones programadas para 3 dias mas
-  var reunions = await Reunions.findAll({
+  const arrReunions = await Reunions.findAll({
     where: {
-      date: {[this.sequelize.Op.eq]: moment().format('YYYY-MM-DD').add(3, 'days').toDate()}
+      Date: DateComp
     },
    });
   
   // por cada reunion encontrada que sea en 3 dias mas
-  for (const reu of reunions) {
-    var arrDevReu = await Reunion_Assistants.findAll({
-      where: {
-        idReu: reu.id
-      },
-    });
-    //por cada ciatado a la reunion
-    for (const dev of arrDevReu){
-      var user = await Users.findOne({
+  if(arrReunions){
+    for (const reu of arrReunions) {
+      const arrDevReu = await Reunion_Assistants.findAll({
         where: {
-          idUser: dev.id
+          idReu: reu.id
         },
       });
-      //envia el mail al desarrollador correspondiente
-      transporter.sendMail(reunion(user,reu), function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
+      //por cada ciatado a la reunion
+      for (const dev of arrDevReu){
+        var user = await Users.findOne({
+          where: {
+            idUser: dev.id
+          },
+        });
+        //envia el mail al desarrollador correspondiente
+        transporter.sendMail(reunion(user,reu), function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+      }
     }
   }
 });      

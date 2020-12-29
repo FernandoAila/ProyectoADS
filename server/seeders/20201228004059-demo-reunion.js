@@ -6,7 +6,9 @@ module.exports = {
       Date: new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()),
       Hour: 10,
       Minute: 0,
-      IdJefe: 1
+      IdJefe: 1,
+      createdAt:new Date(),
+      updatedAt:new Date()
     }]);
   },
 

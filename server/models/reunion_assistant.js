@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       Reunion_Assistant.associate = (models) => {
         Reunion_Assistant.belongsTo(models.reunions, { 
           foreignKey: 'IdReu', 
-          as: 'reunion' 
+          as: 'reunions' 
         });
         Reunion_Assistant.belongsTo(models.users, { 
           foreignKey: 'IdUser', 
@@ -17,12 +17,12 @@ module.exports = (sequelize, DataTypes) => {
       };
     }
   };
-  Reunion - Assistant.init({
+  Reunion_Assistant.init({
     IdReu: DataTypes.INTEGER,
     IdUser: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Reunion_Assistant',
   });
-  return Reunion - Assistant;
+  return Reunion_Assistant;
 };
