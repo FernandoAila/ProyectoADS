@@ -5,18 +5,16 @@ module.exports = {
     const all_assistants = [2,3,4];
     const newData = [];
 
-    for (const mod in all_modName) {
+    for (const assis in all_assistants) {
       const seedData = {
-        nameModule: all_modName[mod],
-        descriptionModule: 'Modulo de prueba',
-        projectId: 1,
-        assigned: all_modAssign[mod],
+        IdUser: all_assistants[assis],
+        IdReu: 1,
         createdAt:new Date(),
         updatedAt:new Date()
       };
       newData.push(seedData);
     }
-    return queryInterface.bulkInsert('Modules',newData);
+    return queryInterface.bulkInsert('Reunion_Assistants',newData);
   },
 
   down: async (queryInterface, Sequelize) => {
