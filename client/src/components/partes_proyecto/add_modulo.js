@@ -91,7 +91,7 @@ const AddModulo = (props) => {
                             {filterResult.map((item) =>
                                 <div key={item.id} className="custom-control custom-checkbox">
                                     <span className="d-flex align-items-center">
-                                        <img alt={item.nombre + " " + item.apellido} src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" className="avatar mr-2"></img>
+                                        <img alt={item.nombre + " " + item.apellido} src={item.profilePic} className="avatar mr-2"></img>
                                         <span className="h6 mb-0 nolinebreak" data-filter-by="text">{item.nombre + " " + item.apellido}</span>
                                         <Form.Check checked={asign == item.id} value={item.id} onChange={(e) => { setAsign(e.target.value) }} name="test" type="radio" className="checkbox-asig" id={item.id} />
                                     </span>

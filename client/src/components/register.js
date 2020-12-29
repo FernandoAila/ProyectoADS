@@ -1,9 +1,6 @@
 import React, { useState, useRef} from "react";
 import axios from "axios";
-import {Alert, Button, Card, Col, Form, Image, Spinner,DropdownButton,Dropdown} from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect} from 'react-router-dom';
-import { login} from "../Redux/actions/auth";
+import {Alert, Button, Card, Col, Form, Spinner} from "react-bootstrap";
 const Register=(props)=>{
     const form = useRef();
     const [email, setEmail] = useState("");
@@ -15,14 +12,6 @@ const Register=(props)=>{
 
     const [loading, setLoading] = useState(false);
     const [estado, setEstado] = useState('');
-
-    const isLogged = useSelector((store) => store.authReducer.isLogged);
-
-    if(!isLogged){
-        return(
-            <Redirect to="/login"  />
-        );
-    }
 
     const onChangeEmail = (e) => {
         const email = e.target.value;

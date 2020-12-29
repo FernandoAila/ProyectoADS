@@ -20,7 +20,7 @@ module.exports = {
       password: hashPass,
       createdAt: new Date(),
       updatedAt: new Date(),
-      profilePic: null,
+      profilePic: "//ssl.gstatic.com/accounts/ui/avatar_2x.png",
       firstTime: false,
       nombre: 'admin',
       apellido: 'admin',

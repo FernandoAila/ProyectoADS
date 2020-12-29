@@ -14,17 +14,20 @@ const transporter = nodemailer.createTransport({
 });
 
 //Texto por defecto al enviar el email.
-const mailer = (user,pass) => {
+const mailer = (user,url) => {
   const from = "email@platamforma.com";
   const to = user.email;
   const subject = "Bienvenido a la plataforma NOMBRE_PLATAFORMA";
   const html = `
-  Saludos
-  ${user.nombre}!, tu contraseña para entrar a la plataforma es ${pass}, por favor reinicia tu contraseña para ingresar.\n
-  Atentamente el equipo de NOMBRE_PLATAFORMA.
+  <p>Hola ${user.nombre || user.email},</p>
+  <p>Para acceder a la plataforma necesitas cambiar tu contraseña con el siguiente link</p>
+  <a href=${url}>${url}</a>
+  <p>–Atentamente el equipo de NOMBRE_PLATAFORMA</p>
   `;
   return { from, to, subject, html };
 };
+
+
 const asignation=(user,module)=>{
   const from = "email@plataforma.com";
   const to = user.email;

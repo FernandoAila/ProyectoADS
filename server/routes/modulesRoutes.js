@@ -189,7 +189,7 @@ router.get("/modulesDeveloper",async(req,res)=>{
                 id:asig.developerId,
             },
         });
-        return res.status(200).send({name:user.nombre,apellido:user.apellido,id:user.id});
+        return res.status(200).send({name:user.nombre,apellido:user.apellido,id:user.id,profilePic:user.profilePic});
     } catch(err){
         return res.status(400).send(err);
     }  

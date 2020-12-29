@@ -74,7 +74,28 @@ router.get("/:id",async (req,res)=>{
         return res.status(400).send(err);
     }
 });
+//edita un proyecto
+router.post("/update",async (req,res)=>{
+    try {
+        console.log("Tes");
+        await  Projects.update(
+            {
+            nameProject:req.body.nameProject,
+            descriptionProject:req.body.descriptionProject},
+        {
+        where:{
+                id:req.body.id,
+            }}).catch(
+                (err)=>( console.log(err) ));
+        console.log("ok");
+       return res.send("ok");
+    } catch (err) {
+        console.log(err);
+       return res.status(400).send(err);
+    }
+});
 
+//asigna cliente
 router.post("/AssignClient",async (req,res)=>{
     try {
         //Revisa si un proyecto con el mismo nombre ya está asignado
