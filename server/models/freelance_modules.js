@@ -22,12 +22,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Freelance_Modules.init({
-    developerId: DataTypes.INTEGER,
-    moduleId: DataTypes.INTEGER,
+    developerId:{type:DataTypes.INTEGER,primaryKey: true},
+    moduleId: {type:DataTypes.INTEGER,primaryKey: true},
     price: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Freelance_Modules',
+    timestamps: false,
   });
   return Freelance_Modules;
 };

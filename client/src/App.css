@@ -423,3 +423,7 @@ h3 + .btn-round, h5 + .btn-round {
 .dropdown-menu{
   z-index: 999;
 }
+.cotizar{
+  position:absolute;
+  right: 10px;
+}

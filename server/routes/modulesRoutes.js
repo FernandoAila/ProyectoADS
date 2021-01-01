@@ -1,7 +1,8 @@
 const express = require("express");
 const { transporter,asignation } = require("../helper/mailer");
 const router = require("express").Router();
-const { Modules,Requirements,Users,Requirements_Modules,Developers_Modules} = require("../models");
+const jwt = require("jsonwebtoken");
+const { Modules,Requirements,Users,Requirements_Modules,Developers_Modules,Freelance_Modules} = require("../models");
 
 //Muestra todos los modulos que son parte de un Proyecto especifico, ademas de sus requerimientos asociados
 router.get("/allFromProject",async (req,res)=>{
@@ -129,28 +130,16 @@ router.post("/AssignDeveloper",async (req,res)=>{
 // Postular a un modulo
 router.post("/Apply",async (req,res)=>{
     try {
-        console.log(req.body);
+        console.log(req.body.id);
+        let data=jwt.verify(req.header("token"), process.env.SECRET_TOKEN);
+        if (!data) return res.status(401).send("no tienes autorizado entrar");
+        console.log(data.id);
 
-        //encuentra al modulo dado el nombre
-        const module = await Modules.findOne({
-            where: {
-                nameModule: req.body.idModule,
-            },
-        });
-
-        //encuentra al usuario dado el nombre
-        const user = await Users.findOne({
-            where: {
-                email: req.body.developerMail
-            },
-        });
-
-        //lo crea en la tabla de postulacion
         const freelance_module = await Freelance_Modules.create({
-            developerId:user.id,
-            moduleId:module.Id,
+            developerId:data.id,
+            moduleId:req.body.id,
+            price:req.body.monto
         }).catch((err)=>console.log(err));
-
         return res.status(200).send(freelance_module);
     } 
     catch (error) {
@@ -158,16 +147,67 @@ router.post("/Apply",async (req,res)=>{
     }
 });
 
-//Devuelve modulos no asignados
+//Dado Id modulo retorna todos los freelancers que postularon a el 
+router.get("/postulation",async(req,res)=>{
+
+    try {
+        const iddevs = await Freelance_Modules.findAll({
+            where:{
+                moduleId:req.query.id
+            }
+        });
+        let arrDevs=[];
+        for(const dev of iddevs){
+            console.log(dev.developerId)
+            const intern = await Users.findOne({
+              where: {
+                id: dev.developerId
+              },
+              raw : true,
+            }).catch((err)=>console.log(err))
+            arrDevs.push(intern)
+          }
+        console.log("test");
+        return res.send(arrDevs);
+    } catch (error) {
+        return res.send(error)
+    }
+}
+)
+
+//Devuelve los modulos disponibles para postular
+router.get("/postulationModules",async (req,res)=>{
+    try {
+        //Busca todos los modulos no asignados dado un proyecto
+        let data=jwt.verify(req.header("token"), process.env.SECRET_TOKEN);
+        if (!data) return res.status(401).send("no tienes autorizado entrar");
+        const Allmodules= await Modules.findAll({
+            where: {
+                assigned: false
+            }
+        });
+        const Postulationmodules = await Freelance_Modules.findAll({
+            where:{
+                developerId:data.id
+            },
+            raw:true,
+        });
+        const modules = Allmodules.filter(({ id: id1 }) => !Postulationmodules.some(({ moduleId: id2 }) => id2 === id1));
+        return res.send(modules);
+    } catch (err) {
+        return res.status(400).send(err);
+    }
+});
+//Devuelve TODOS los modulos no asignados
 router.get("/AllUnasigned",async (req,res)=>{
     try {
-        console.log("hohoo");
         //Busca todos los modulos no asignados dado un proyecto
         const modules= await Modules.findAll({
             where: {
                 assigned: false
             }
         });
+
         return res.send(modules);
     } catch (err) {
         return res.status(400).send(err);

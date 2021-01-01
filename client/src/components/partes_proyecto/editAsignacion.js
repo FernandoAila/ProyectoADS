@@ -14,10 +14,18 @@ const EditAsig = (props) => {
     useEffect(() => {
             axios.get("http://localhost:8080/users/AllInterns"
             ).then((response) => {
-                setInterns(response.data);
-            })
+                const interns=response.data;
+                axios.get("http://localhost:8080/modulesRoutes/postulation",{
+                    params:{
+                        id:props.idModule
+                    }
+              }
+                ).then((response)=>{
+                        setInterns(interns.concat(response.data));
+                    });
+            });
         }, []);
-        const handleSubmit = (e) => {
+    const handleSubmit = (e) => {
             if(props.id){
                 axios.post("http://localhost:8080/modulesRoutes//ReAssignDeveloper", {
                     idModule:props.idModule,
@@ -31,7 +39,7 @@ const EditAsig = (props) => {
                     id: asign
                 }).then(() => { window.location.reload() })
             }
-            }
+    }
     return (
         <Fragment>
             <Modal.Header closeButton>
