@@ -1,14 +1,8 @@
 import axios from "axios";
 import React, { useState, useRef,useEffect} from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-
+import {Button} from "react-bootstrap"
+import Modulo from "./partes_nocotizado/modulo.js";
 const useStyles = makeStyles({
     table: {
       minWidth: 650,
@@ -21,8 +15,12 @@ const NoCotizadosModulos=()=>{
     const [modulos, setModulos] = useState([]);
     const classes = useStyles();
     useEffect(() => {
-        axios.get("http://localhost:8080/modulesRoutes/AllUnasigned",
+        axios.get("http://localhost:8080/modulesRoutes/postulationModules",
         {
+            headers:
+                {
+                    'token': localStorage.getItem('token')
+                }
       }).then(response => {
           console.log(response.data);
           setModulos(response.data);
@@ -41,17 +39,7 @@ const NoCotizadosModulos=()=>{
                                     </div>
                                     <div class="card-list-body-fklter-list-1607686290867">
                                         {modulos.map( (modulo,index) => (
-                                            <div class="card card-task">
-                                                <div class="card-body">
-                                                    <div class="card-title">
-                                                        {modulo.nameModule}
-                                                        <hr></hr>
-                                                        <span class="text-small">
-                                                            <p>{modulo.descriptionModule}</p>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <Modulo modulo={modulo} key={index} />
                                         ))}
                                     </div>
                                 </div>

@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 const Index=()=>{
     const isLogged = useSelector((store) => store.authReducer.isLogged);
     if(isLogged){
-        return <Redirect to="/perfil"   />;
+        return <Redirect to={"/user/"+localStorage.getItem("userId")}   />;
     }
     return <Redirect to="/login"   />;
 }

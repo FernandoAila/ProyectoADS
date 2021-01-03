@@ -1,8 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import {Button,Form} from 'react-bootstrap';
-import { useState } from 'react';
-import axios from "axios";
 import Login from "./components/login.js";
 import Perfil from "./components/perfil.js";
 import Navb from "./components/nav.js"
@@ -12,7 +9,7 @@ import ListsProjects from "./components/listsProjects.js"
 import AddProyect from "./components/add_proyect.js"
 import  MostrarProyecto   from "./components/project.js";
 import NoCotizadosModulos from "./components/modulos_no_cotizados.js";
-import UserPage from "./components/user_page.js";
+import PaginaUsuario from "./components/pagina_usuario.js";
 import RecoverPass from "./components/recoverPass.js";
 import{BrowserRouter as Router, Switch,Route,Link}from 'react-router-dom';
 
@@ -29,7 +26,7 @@ function App() {
       </Route>
       <Route path="/user/:id">
         <Navb/>
-        <UserPage/>
+        <PaginaUsuario/>
       </Route>
       <Route path="/register">
         <Navb/>

@@ -52,7 +52,7 @@ const Login = (props) => {
   };
 
   if (isLogged) {
-    return <Redirect to="/perfil" />;
+    return <Redirect to={"/user/"+localStorage.getItem("userId")} />;
   }
 
   return (
