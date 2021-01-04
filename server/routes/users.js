@@ -33,6 +33,25 @@ router.get("/profileinfo",async (req,res)=>{
       return res.status(400).send(err);
   }
 });
+//dado usurio logeado, devuelve rol
+router.get("/getrol",async (req,res)=>{
+  try {
+    let data=jwt.verify(req.header("token"), process.env.SECRET_TOKEN);
+    if (!data) return res.status(401).send("no existe usuario logeado");
+    console.log(data.id)
+    const user = await users_rols.findOne({
+      where:{
+        userId:data.id
+      }
+    });
+    return res.send({rol:user.rolsId})
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
+
+
+//modifica datos del usuario
 router.post("/modify",async (req,res)=>{
     try {
       let data=jwt.verify(req.body.token, process.env.SECRET_TOKEN);
