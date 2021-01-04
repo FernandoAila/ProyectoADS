@@ -27,6 +27,20 @@ const mailer = (user,url) => {
   return { from, to, subject, html };
 };
 
+//Texto por defecto al enviar el email.
+const postulation = (user,module,monto) => {
+  const from = "email@platamforma.com";
+  const to = "email@jefedeproyecto.com";
+  const subject = "Postulacion a modulo";
+  const html = `
+  <p>${user.nombre} ${user.apellido} ha postulado al siguiente modulo:</p>
+  <p>${module.nameModule}</p>
+  <p>${module.descriptionModule}</p>
+  <p>Con un monto de ${monto} </p>
+  <p>–Atentamente el equipo de NOMBRE_PLATAFORMA</p>
+  `;
+  return { from, to, subject, html };
+};
 
 const asignation=(user,module)=>{
   const from = "email@plataforma.com";
@@ -95,4 +109,4 @@ var j = schedule.scheduleJob('* * * * *', async function(){ //configurado para q
   }
 });      
 
-module.exports={transporter,mailer,asignation};
+module.exports={transporter,mailer,asignation,postulation};

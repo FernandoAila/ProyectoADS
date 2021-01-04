@@ -97,7 +97,12 @@ router.post("/login", async (req, res) => {
     if (!validPass) return res.status(401).send({ accessToken: null, message: "usuario o contraseña equivocada" });
     //Asigna un token al usurio
     const token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN, { expiresIn: 86400 });
-    return res.status(200).send({ id: user.id, email: user.email, accessToken: token,profilepic:user.profilePic });
+    const dataId = await users_rols.findOne({
+      where:{
+        userId:user.id
+      }
+    });
+    return res.status(200).send({ id: user.id, email: user.email, accessToken: token,profilepic:user.profilePic,rol:dataId.rolsId});
   } catch (error) {
     return res.status(400).send(error);
   }

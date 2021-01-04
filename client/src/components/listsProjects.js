@@ -99,7 +99,7 @@ const ListsProjects= (props)=>{
             <Col md={6}>
                 <h5>Projectos</h5>
                 <div className="mt-3">
-                {"Items per Page: "}
+                {"Items por pagina: "}
                 <select onChange={handlePageSizeChange} value={pageSize}>
                     {pageSizes.map((size) => (
                         <option key={size} value={size}>

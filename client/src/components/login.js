@@ -42,6 +42,7 @@ const Login = (props) => {
         localStorage.setItem('token', data.data.accessToken);
         localStorage.setItem('profilePic', data.data.profilepic);
         localStorage.setItem('userId', data.data.id);
+        localStorage.setItem('rol', data.data.rol);
         window.location.reload();
         //dispatch(redirect("/perfil"));
       }).catch(()=>{

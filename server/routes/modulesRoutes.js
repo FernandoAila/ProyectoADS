@@ -1,5 +1,5 @@
 const express = require("express");
-const { transporter,asignation } = require("../helper/mailer");
+const { transporter,asignation,postulation } = require("../helper/mailer");
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 const { Modules,Requirements,Users,Requirements_Modules,Developers_Modules,Freelance_Modules} = require("../models");
@@ -140,6 +140,26 @@ router.post("/Apply",async (req,res)=>{
             moduleId:req.body.id,
             price:req.body.monto
         }).catch((err)=>console.log(err));
+        const user = await Users.findOne({
+            where: {
+                id: data.id,
+            },
+        });
+        const module = await Modules.findOne({
+            where: {
+                id:req.body.id,
+            },
+        });
+        const sendEmail = () => {
+            transporter.sendMail(postulation(user,module,req.body.monto), (err, info) => {
+                if (err) {
+                  console.log(err);
+                  return res.status(400).send(err);
+                }
+                console.log(`** Email enviado**`, info.response)
+              })
+            };
+        sendEmail();
         return res.status(200).send(freelance_module);
     } 
     catch (error) {
