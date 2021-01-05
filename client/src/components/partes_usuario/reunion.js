@@ -8,25 +8,31 @@ const Reunion = (props) => {
     useEffect(() => {
     axios.get("http://localhost:8080/reunionsRoutes/ReunionsDev", {
             params: {
-                idReu: props.reunion.id
+                IdReu: props.reunions.id
             }
         }
         ).then(response => {
-            setDevReunions(response.reunion);
+            setDevReunions(response.data);
         });
     }, []);
-
+    var minute;
+    if (props.reunions.Minute < 10) {
+        minute="0"+props.reunions.Minute
+    }
+    else{
+        minute=props.reunions.Minute
+    }
     return (
         <Card className="card-task">
             <div className="card-body">
                 <div className="card-title">
-                    <h6 className="titlecard">{props.reunion.Date}</h6>
+                    <h6 className="titlecard">{props.reunions.Date}{" "}{props.reunions.Hour}:{minute}</h6>
                 </div>
                 <div className="card-meta">
                     <div className="d-flex align-items-center">
                         <ul className="avatars">
-                            {reunionsDev.map( (devReu,index) => (
-                                <DevReu devReuv={devReu} key={index} />
+                            {reunionsDev.map( (reunionsDev,index) => (
+                                <DevReu reunionsDev={reunionsDev} key={index} />
                             ))}
                         </ul>
                     </div>

@@ -5,9 +5,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authFunc = require("../helper/verifyToken");
 const uploadFile = require("../helper/uploadImage");
+
 //Recoge los datos del usuario logeado
 router.get("/profile",async (req,res)=>{
-    try {
+    try {     
         let data=jwt.verify(req.header("token"), process.env.SECRET_TOKEN);
         if (!data) return res.status(401).send("no tienes autorizado entrar");
         const user = await Users.findOne({
@@ -17,9 +18,10 @@ router.get("/profile",async (req,res)=>{
           });
         return res.send({email:user.email,nombre:user.nombre,apellido:user.apellido,telefono:user.telefono,profilePic:user.profilePic});
     } catch (err) {
-        return res.status(400).send(err);
+      return res.status(400).send(err);
     }
 });
+
 //Recoge datps de un usuario dado ID
 router.get("/profileinfo",async (req,res)=>{
   try {
@@ -38,7 +40,7 @@ router.get("/getrol",async (req,res)=>{
   try {
     let data=jwt.verify(req.header("token"), process.env.SECRET_TOKEN);
     if (!data) return res.status(401).send("no existe usuario logeado");
-    console.log(data.id)
+
     const user = await users_rols.findOne({
       where:{
         userId:data.id

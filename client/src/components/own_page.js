@@ -35,13 +35,15 @@ const OwnPage = () => {
             setModules(response.data);
         });
         axios.get("http://localhost:8080/reunionsRoutes/allmyReunions", {
-            params: {
-                idUser: id
+            headers:
+            {
+                'token': localStorage.getItem('token')
             }
         }
         ).then(response => {
-            setReunions(response.data);
             console.log(response.data);
+            setReunions(response.data);
+          
         });
     }, []);
     return (
