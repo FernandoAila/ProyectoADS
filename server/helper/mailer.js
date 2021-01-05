@@ -68,7 +68,7 @@ const reunion = (user,reu) => {
   return { from, to, subject, html };
 };
 
-var j = schedule.scheduleJob('* * * * *', async function(){ //configurado para que mande mail todos los dias a las 7:00 AM
+var j = schedule.scheduleJob('0 7 * * *', async function(){ //configurado para que mande mail todos los dias a las 7:00 AM
 
   console.log("entra al schedule");
   var DateComp = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());

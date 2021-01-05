@@ -39,34 +39,33 @@ const UserPage = () => {
             <Row className="justify-content-center">
                 <Col lg={11} xl={10}>
                     <div className="page-header mb-4">
-                        <div className="media">
-                            <Image alt="Image" src={user.profilePic} className="avatar avatar-lg mt-1">
-                            </Image>
-                            <div class="media-body ml-3">
-                                <h1 class="namePerfil">{user.nombre+" "+user.apellido}</h1>
-                                <p class="lead">{user.email}</p>
+                            <div className="media">
+                                <Image alt="Image" src={user.profilePic} className="avatar avatar-lg mt-1">
+                                </Image>
+                                <div class="media-body ml-3">
+                                    <h1 class="namePerfil">{user.nombre+" "+user.apellido}</h1>
+                                    <p class="lead">{user.email}</p>
+                                </div>
                             </div>
+                            <Col md="auto">
+                                <InputGroup className="input-group-round">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text>
+                                        <i className="material-icons">filter_list</i>
+                                        </InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                <Form.Control onChange={onChangeSearch} className="filter-list-input" type="search" placeholder="Filtrar Modulos" />
+                                </InputGroup>
+                            </Col>
                         </div>
-                        <Col md="auto">
-                    <InputGroup className="input-group-round">
-                        <InputGroup.Prepend>
-                            <InputGroup.Text>
-                                <i className="material-icons">filter_list</i>
-                            </InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <Form.Control onChange={onChangeSearch} className="filter-list-input" type="search" placeholder="Filtrar Modulos" />
-                    </InputGroup>
-                </Col>
-
+                        <div className="content-list-body">
+                            <div className="card-list-head">
+                                <h6>Modulos Activos</h6>
+                            </div>
+                            <div className="card-list-body">
+                            {filterResult.map( (item)=> <Modulo key={item.id} data={item} datadev={user}/>)}
+                        </div>
                     </div>
-                    <div className="content-list-body">
-                    <div className="card-list-head">
-                        <h6>Modulos Activos</h6>
-                    </div>
-                    <div className="card-list-body">
-                        {filterResult.map( (item)=> <Modulo key={item.id} data={item} datadev={user}/>)}
-                    </div>
-            </div>
                 </Col>
             </Row>
         </Container>
