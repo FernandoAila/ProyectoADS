@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Redirect, useParams } from 'react-router-dom';
 import Modulo from "./partes_usuario/modulo.js"
+import Reunion from "./partes_usuario/reunion.js"
 import { Container, Image, InputGroup, Form, Row, Col,Tab,Tabs } from "react-bootstrap";
 const OwnPage = () => {
     const [searchname, setSearch] = useState("");
     const [user, setUser] = useState({});
     const [modules, setModules] = useState([]);
+    const [reunions, setReunions] = useState([]);
     let { id } = useParams();
     const onChangeSearch = (e) => {
         const searchname = e.target.value;
@@ -32,6 +34,15 @@ const OwnPage = () => {
         ).then(response => {
             setModules(response.data);
         });
+        axios.get("http://localhost:8080/reunionsRoutes/allmyReunions", {
+            params: {
+                idUser: id
+            }
+        }
+        ).then(response => {
+            setReunions(response.data);
+            console.log(response.data);
+        });
     }, []);
     return (
         <Container>
@@ -50,30 +61,43 @@ const OwnPage = () => {
                     </div>
                     
                     <Tabs defaultActiveKey="modulos" fill>
-                            <Tab eventKey="modulos" title="Modulos">
+                        <Tab eventKey="modulos" title="Modulos">
                             <Col md="auto">
-                        <InputGroup className="input-group-round">
-                            <InputGroup.Prepend>
-                                <InputGroup.Text>
-                                    <i className="material-icons">filter_list</i>
-                                </InputGroup.Text>
-                            </InputGroup.Prepend>
+                            <InputGroup className="input-group-round">
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text>
+                                        <i className="material-icons">filter_list</i>
+                                    </InputGroup.Text>
+                                </InputGroup.Prepend>
                             <Form.Control onChange={onChangeSearch} className="filter-list-input" type="search" placeholder="Filtrar Modulos" />
-                        </InputGroup>
-                    </Col>
-                    <div className="content-list-body">
-                        <div className="card-list-head">
-                            <h6>Modulos Activos</h6>
-                        </div>
-                        <div className="card-list-body">
-                            {filterResult.map((item) => <Modulo key={item.id} data={item} datadev={user} />)}
-                        </div>
-                    </div>
-                            </Tab>
-                            <Tab eventKey="reuniones" title="Reuniones">
-                                <p>TODO</p>
-                            </Tab>
-                        </Tabs>
+                            </InputGroup>
+                            </Col>
+                            <div className="content-list-body">
+                                <div className="card-list-head">
+                                    <h6>Modulos Activos</h6>
+                                </div>
+                                <div className="card-list-body">
+                                    {filterResult.map((item) => <Modulo key={item.id} data={item} datadev={user} />)}
+                                </div>
+                            </div>
+                        </Tab>
+
+                        <Tab eventKey="reuniones" title="Reuniones">
+                              <Col md="auto">
+
+                            </Col>
+                            <div className="content-list-body">
+                                <div className="card-list-head">
+                                    <h6>Reuniones Futuras</h6>
+                                </div>
+                                <div className="card-list-body">
+                                    {reunions.map( (reunions,index) => (
+                                        <Reunion reunions={reunions} key={index} />
+                                    ))}
+                                </div>
+                            </div>
+                        </Tab>
+                    </Tabs>
                         
                 </Col>
             </Row>

@@ -21,6 +21,7 @@ app.use("/users",require("./routes/users"));
 app.use("/modules",require("./routes/modules"));
 app.use("/projects",require("./routes/projectsRoutes"));
 app.use("/modulesRoutes",require("./routes/modulesRoutes"));
+app.use("/reunionsRoutes",require("./routes/reunionsRoutes"));
 app.use("/requirements",require("./routes/requirementsRoutes"));
 app.use('/images', express.static('images'))
 const PUERTO= process.env.PORT||8080;
