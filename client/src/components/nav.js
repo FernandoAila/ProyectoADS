@@ -37,12 +37,12 @@ const Navb=(props)=>{
       </Nav>
       <div className="d-flex align-items-center">
           <div>
-          <Button variant="outline-primary" className="button-Reunion" onClick={()=>{setShow("Mensaje")}}>
+          {(localStorage.getItem("rol")==2|| localStorage.getItem("rol")==1) &&<Button variant="outline-primary" className="button-Reunion" onClick={()=>{setShow("Mensaje")}}>
                                             Enviar mensaje
-                                        </Button>
-      <Button variant="outline-secondary" className="button-Reunion" onClick={()=>{setShow("Reunion")}}>
+                                        </Button>}
+      {(localStorage.getItem("rol")==2|| localStorage.getItem("rol")==1) &&<Button variant="outline-secondary" className="button-Reunion" onClick={()=>{setShow("Reunion")}}>
                                             Crear Reunion
-                                        </Button>
+                                        </Button>}
           </div>
 
               <DropdownButton className="doa" variant="xd" drop="left"  title={<img alt="Image" src={localStorage.getItem('profilePic')} class="avatar"></img>} >
