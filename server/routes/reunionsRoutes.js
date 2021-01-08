@@ -36,12 +36,14 @@ router.get("/allmyReunions",async (req,res)=>{
             const ArrReuAssi= await Reunion_Assistants.findAll({
                 where: {
                     IdUser: data.id
-                }
+                },
+                raw:true
             });
-
+            console.log(ArrReuAssi);
 
             let arrReunion = [];
             for(const reu of ArrReuAssi){
+                console.log(reu);
     
                 let reunion = await Reunions.findOne({
                     where: {
@@ -54,7 +56,7 @@ router.get("/allmyReunions",async (req,res)=>{
     
             arrReunion.push(reunion);
             }
-            return res.send(arrReunion);
+            return res.send(arrReunion.filter((x)=>x!==null));
         }
 
     } catch (err) {
@@ -80,23 +82,26 @@ router.get("/ReunionsDev",async (req,res)=>{
 //Crea una reunion
 router.post("/createReu",async (req,res)=>{
     try { 
-        const reunion = await Reunions.create({
-            Date: req.body.Date,
-            IdJefe: req.body.idJefe,
-            Hour: req.body.Hour,
-            Minute: req.body.Minute
-        });
+        let date=new Date(req.body.Date);
 
+        const reunion = await Reunions.create({
+            Date: date,
+            IdJefe: req.body.idJefe,
+            Title:req.body.titulo,
+            Link:req.body.Link,
+            Hour:req.body.Hora,
+            Minute: req.body.Minuto,
+        }).catch((err)=>console.log(err));
         for(const dev of req.body.Devs){
             Reunion_Assistants.create({
                 IdReu: reunion.id,
-                IdUser: dev.id
+                IdUser: dev
             });
         }
         return res.status(200).send("ok");
     } 
     catch (error) {
-        return res.status(400).send("Hubo un error al crear el requerimiento");    
+        return res.status(400).send(error);    
     }
 });
 

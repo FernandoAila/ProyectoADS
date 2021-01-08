@@ -34,6 +34,7 @@ router.post("/create",async (req,res)=>{
             descriptionProject:req.body.descriptionProject,
         }).catch((err)=>console.log(err));
         const arrayReq= req.body.requeriments;
+        console.log(arrayReq);
         for (const requi of arrayReq) {
             await Requirements.create({
                 nameRequirement:requi.name,

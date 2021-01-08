@@ -1,10 +1,12 @@
 const router = require("express").Router();
 const multer=require("multer");
 const { Users,rols,users_rols } = require("../models");
+const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authFunc = require("../helper/verifyToken");
 const uploadFile = require("../helper/uploadImage");
+const { transporter,mensajePer } = require("../helper/mailer");
 
 //Recoge los datos del usuario logeado
 router.get("/profile",async (req,res)=>{
@@ -145,6 +147,69 @@ router.get("/AllInterns",async (req,res)=>{
       console.log(internsId);
       let arrIntern=[];
       //Busca todos los usuarios que sea desarrolladores internos
+      for(const internsRols of internsId){
+        console.log(internsRols.userId)
+        const intern = await Users.findOne({
+          where: {
+            id: internsRols.userId
+          },
+          raw : true,
+        }).catch((err)=>console.log(err))
+        arrIntern.push(intern)
+      }
+      console.log(arrIntern);
+      return res.send(arrIntern);
+  } catch (err) {
+      return res.status(400).send(err);
+  }
+});
+//Envia un mensaje al correo cierto usuarios
+router.post("/SendMessage", async(req,res)=>{
+  try {
+    console.log(req.body.Devs);
+    for(const dev of req.body.Devs){
+      const user = await Users.findOne({
+        where: {
+          id: dev
+        },
+        raw:true
+      });
+      const sendEmail = () => {
+        transporter.sendMail(mensajePer(user,req.body.Asunto,req.body.Contenido), (err, info) => {
+            if (err) {
+                  console.log(err);
+                  return res.status(400).send(err);
+            }
+            console.log(`** Email enviado**`, info.response)
+        }
+        );
+      };
+    sendEmail();
+  }
+    return res.status(200).send("ok");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send(error);
+  }
+});
+
+
+
+//Devuelve a los Dessarrolladores 
+router.get("/AllDevs",async (req,res)=>{
+  try {
+      //Busca todos los desarrolladores en la tabla users_rols
+      const internsId = await users_rols.findAll({
+          where: {
+            rolsId: {
+              [Op.or]: [3, 4]
+            }
+          },
+          raw : true,
+      });
+      console.log(internsId);
+      let arrIntern=[];
+      //Busca todos los usuarios que sea desarrolladores 
       for(const internsRols of internsId){
         console.log(internsRols.userId)
         const intern = await Users.findOne({

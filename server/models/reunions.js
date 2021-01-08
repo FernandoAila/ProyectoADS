@@ -16,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   Reunions.init({
     Date: DataTypes.DATEONLY,
     IdJefe: DataTypes.INTEGER,
+    Title: DataTypes.STRING,
+    Link: DataTypes.STRING,
     Hour: DataTypes.INTEGER,
     Minute: DataTypes.INTEGER
   }, {

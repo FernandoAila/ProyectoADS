@@ -1,15 +1,19 @@
-import React from "react";
+import React,{ useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory,Redirect} from 'react-router-dom';
 import {logout} from "../Redux/actions/auth.js";
-import { Navbar, Nav, Form, FormControl, Button,DropdownButton,Dropdown } from 'react-bootstrap';
+import AddReunion from "./partes_proyecto/crear_reunion";
+import EnviarMensaje from "./partes_proyecto/enviar_mensaje";
+import { Navbar, Nav, Modal,Form, FormControl, Button,DropdownButton,Dropdown } from 'react-bootstrap';
 const Navb=(props)=>{
   const history = useHistory();
+  const [show, setShow] = useState(false);
   const dispatch=useDispatch();
   const handleLogout=(e)=>{
       dispatch(logout());
       window.location.reload();
   }
+  const handleClose= ()=> setShow(false);
   const isLogged = useSelector((store) => store.authReducer.isLogged);
   if(!isLogged){
     return(
@@ -18,6 +22,7 @@ const Navb=(props)=>{
 }
   return(
       <Navbar bg="dark" expand="lg" variant="dark" sticky="top">
+
       <Navbar.Brand href="#home">
        N
       </Navbar.Brand>
@@ -31,6 +36,15 @@ const Navb=(props)=>{
           </div>
       </Nav>
       <div className="d-flex align-items-center">
+          <div>
+          <Button variant="outline-primary" className="button-Reunion" onClick={()=>{setShow("Mensaje")}}>
+                                            Enviar mensaje
+                                        </Button>
+      <Button variant="outline-secondary" className="button-Reunion" onClick={()=>{setShow("Reunion")}}>
+                                            Crear Reunion
+                                        </Button>
+          </div>
+
               <DropdownButton className="doa" variant="xd" drop="left"  title={<img alt="Image" src={localStorage.getItem('profilePic')} class="avatar"></img>} >
                 <Dropdown.Item href={"/user/"+localStorage.getItem("userId")}>Perfil</Dropdown.Item>
                 <Dropdown.Item href="/perfil">Cuenta</Dropdown.Item>
@@ -39,6 +53,18 @@ const Navb=(props)=>{
                 <Dropdown.Item onClick={handleLogout}>Cerrar sesion</Dropdown.Item>
               </DropdownButton>
           </div>
+          <Modal show={show=="Reunion"} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Crear Reunion</Modal.Title>
+                </Modal.Header>
+                    <AddReunion/>
+            </Modal>
+            <Modal show={show=="Mensaje"} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Enviar mensaje</Modal.Title>
+                </Modal.Header>
+                    <EnviarMensaje/>
+            </Modal>
     </Navbar>
   );
 }

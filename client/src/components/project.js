@@ -3,6 +3,8 @@ import { Container, Tabs, Tab, OverlayTrigger, Tooltip, Row, Col, Form,Button,Mo
 import axios from "axios";
 import { Redirect, useParams } from 'react-router-dom';
 import ModulosList from "./partes_proyecto/modulos";
+import ReqList from "./partes_proyecto/requerimientos";
+import AddReunion from "./partes_proyecto/crear_reunion";
 
 
 
@@ -27,6 +29,7 @@ const MostrarProyecto = () => {
                         projectId: id
                     }
                 }).then(response => {
+                    console.log(response.data)
                     setRequirements(response.data);
                 });
 
@@ -82,6 +85,12 @@ const MostrarProyecto = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+            <Modal show={show=="Reunion"} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Crear Reunion</Modal.Title>
+                </Modal.Header>
+                    <AddReunion/>
+            </Modal>
             <div class="breadcrumb-bar navbar bg-white ">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -124,7 +133,7 @@ const MostrarProyecto = () => {
                                 <ModulosList modules={modules} projectId={id} />
                             </Tab>
                             <Tab eventKey="Requerimientos" title="Requerimientos">
-                                <p>TODO</p>
+                            <ReqList reqs={requirements} projectId={id} />
                             </Tab>
                         </Tabs>
                     </Col>

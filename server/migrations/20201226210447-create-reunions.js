@@ -8,6 +8,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      Title: {
+        type: Sequelize.STRING
+      },
+      Link: {
+        type: Sequelize.STRING
+      },
       Date: {
         type: Sequelize.DATEONLY
       },

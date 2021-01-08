@@ -77,7 +77,7 @@ const Register=(props)=>{
         }).then((data) => {
             console.log(data);
             setEstado(true);
-            window.location.reload();
+            setLoading(false);
         }).catch(()=>{
             setLoading(false);
         });
@@ -86,8 +86,8 @@ const Register=(props)=>{
     return (
         <Col md="13">
             <Card className="card card-container">
-                {estado ? <b> color={"green"} Registro Exitoso </b>
-                    :<b> Ingrese los datos de nuevo usuario </b> }
+                {estado && <Alert variant="success">Registro Exitoso
+                    </Alert>}
                 <Form  ref={form}>
                     <Form.Group controlId="formBasicEmail">
                         <label htmlFor="email">Email</label>
@@ -137,8 +137,6 @@ const Register=(props)=>{
                             }
                         </Button>
                     </Form.Group>
-                    {estado &&  <Alert variant="danger">Datos incorrectos.
-                    </Alert> }
                 </Form>
             </Card>
         </Col>

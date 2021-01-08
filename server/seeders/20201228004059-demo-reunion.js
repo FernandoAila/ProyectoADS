@@ -8,6 +8,8 @@ module.exports = {
     return queryInterface.bulkInsert('Reunions', [{
       Date: DateComp,
       Hour: 10,
+      Link:"https://zoom.us/j/91846711975",
+      Title:"Coordinar proyecto",      
       Minute: 0,
       IdJefe: 1,
       createdAt:new Date(),

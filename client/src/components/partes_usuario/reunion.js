@@ -13,20 +13,16 @@ const Reunion = (props) => {
         }
         ).then(response => {
             setDevReunions(response.data);
+            console.log(reunionsDev)
         });
     }, []);
-    var minute;
-    if (props.reunions.Minute < 10) {
-        minute="0"+props.reunions.Minute
-    }
-    else{
-        minute=props.reunions.Minute
-    }
     return (
         <Card className="card-task">
             <div className="card-body">
                 <div className="card-title">
-                    <h6 className="titlecard">{props.reunions.Date}{" "}{props.reunions.Hour}:{minute}</h6>
+                    <h6>{props.reunions.Title}</h6>
+                    <a href={props.reunions.Link}>{props.reunions.Link}</a>
+                    <h6 className="titlecard">{props.reunions.Date}{" "}{props.reunions.Hour}:{props.reunions.Minute<10?"0"+props.reunions.Minute:props.reunions.Minute}</h6>
                 </div>
                 <div className="card-meta">
                     <div className="d-flex align-items-center">

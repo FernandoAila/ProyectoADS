@@ -38,5 +38,34 @@ router.post("/create",async (req,res)=>{
         return res.status(400).send("Hubo un error al crear el requerimiento");    
     }
 });
-
+router.post("/update",async (req,res)=>{
+    try {
+        await  Requirements.update(
+            {
+                nameRequirement:req.body.requirementName,
+                descriptionRequirement:req.body.requirementDescription},
+        {
+        where:{
+                id:req.body.idM,
+            }}).catch(
+                (err)=>( console.log(err) ));
+        console.log("ok");
+       return res.send("ok");
+    } catch (err) {
+        console.log(err);
+       return res.status(400).send(err);
+    }
+});
+router.post("/delete",async (req,res)=>{
+    try {
+         await Requirements.destroy({
+            where: {
+              id: req.body.id
+            }
+          }).catch(err=>console.log(err));
+          return res.status(200).send("ok");
+    } catch (err) {
+       return res.status(400).send(err);
+    }
+});
 module.exports = router;

@@ -64,10 +64,20 @@ const reunion = (user,reu) => {
   const html = `
   Saludos
   ${user.nombre}!, Se le recuerda que tiene una reunion agendada para el dia ${reu.Date} a las ${reu.Hour}:${reu.Minute}.
+  <p>${reu.Title} </p>
+  <p><a href=${reu.Link}>${reu.Link}</a> </p>
   `;
   return { from, to, subject, html };
 };
-
+//Texto por defecto al enviar el email.
+const mensajePer = (user,asunto,contenido) => {
+  console.log("HERE");
+  const from = "email@platamforma.com";
+  const to = user.email;
+  const subject = asunto;
+  const html = contenido;
+  return { from, to, subject, html };
+};
 var j = schedule.scheduleJob('0 7 * * *', async function(){ //configurado para que mande mail todos los dias a las 7:00 AM
 
   console.log("entra al schedule");
@@ -109,4 +119,4 @@ var j = schedule.scheduleJob('0 7 * * *', async function(){ //configurado para q
   }
 });      
 
-module.exports={transporter,mailer,asignation,postulation};
+module.exports={transporter,mailer,asignation,postulation,mensajePer};

@@ -47,6 +47,7 @@
 .list {
   text-align: center;
   margin: auto;
+  padding-top: 30px;
 }
 .card {
   background-color: #f7f7f7;
@@ -427,4 +428,12 @@ h3 + .btn-round, h5 + .btn-round {
 .cotizar{
   position:absolute;
   right: 10px;
+}
+.button-Reunion{
+  margin-right: 10px;
+}
+.addp{
+  position: relative;
+  margin-left: 30px;
+  top: 10px;
 }
