@@ -10,7 +10,7 @@ Se debe crear la carpeta *server/config* y el archivo *server/config/config.json
 
 /> npx sequelize-cli db:seed:all
 
-/> node app.js
+/> npm start
 
 ## Para ejecutar el frontend se debe navegar hacial la carpeta *client* y ejecutar los siguientes comandos ##
 
